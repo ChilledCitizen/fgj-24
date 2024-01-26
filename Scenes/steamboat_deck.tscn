@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctyrodpltwa3q"]
+
+[ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
+[ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_tthdx"]
+[ext_resource type="Script" path="res://Scripts/Deck.gd" id="2_tkmyr"]
+[ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="5_23v8c"]
+[ext_resource type="Texture2D" uid="uid://ctjllrd8xapgl" path="res://2d/icon_i.png" id="5_aq6vs"]
+[ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_autvq"]
+radius = 86.56
+
+[node name="SceneParent" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position_smoothing_enabled = true
+script = ExtResource("1_dqxwu")
+player = NodePath("../Player")
+
+[node name="Deck" type="Sprite2D" parent="."]
+texture_repeat = 2
+rotation = 1.5708
+scale = Vector2(1.319, 1)
+texture = ExtResource("1_tthdx")
+region_enabled = true
+region_rect = Rect2(0, 0, 1080, 1920)
+script = ExtResource("2_tkmyr")
+
+[node name="Player" parent="." instance=ExtResource("4_h4y8v")]
+jokeProjectile = ExtResource("7_hspfm")
+
+[node name="Enemy_Pete" type="CharacterBody2D" parent="."]
+position = Vector2(-697, -231)
+script = ExtResource("5_23v8c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_Pete"]
+shape = SubResource("CircleShape2D_autvq")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy_Pete"]
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("5_aq6vs")
+metadata/_edit_lock_ = true
