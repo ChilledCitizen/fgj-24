@@ -1,15 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=8 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
 [ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_tthdx"]
 [ext_resource type="Script" path="res://Scripts/Deck.gd" id="2_tkmyr"]
 [ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
-[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="5_23v8c"]
-[ext_resource type="Texture2D" uid="uid://ctjllrd8xapgl" path="res://2d/icon_i.png" id="5_aq6vs"]
+[ext_resource type="PackedScene" uid="uid://vo6cridhxlsd" path="res://Prefabs/tickle.tscn" id="6_uepah"]
+[ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
 [ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_autvq"]
-radius = 86.56
 
 [node name="SceneParent" type="Node2D"]
 
@@ -29,16 +26,6 @@ script = ExtResource("2_tkmyr")
 
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
 jokeProjectile = ExtResource("7_hspfm")
+tickleArea = ExtResource("6_uepah")
 
-[node name="Enemy_Pete" type="CharacterBody2D" parent="."]
-position = Vector2(-697, -231)
-script = ExtResource("5_23v8c")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_Pete"]
-shape = SubResource("CircleShape2D_autvq")
-metadata/_edit_lock_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Enemy_Pete"]
-scale = Vector2(0.275, 0.275)
-texture = ExtResource("5_aq6vs")
-metadata/_edit_lock_ = true
+[node name="Enemy_Pete" parent="." instance=ExtResource("6_y70qp")]

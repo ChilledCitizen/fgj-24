@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://5j6dajqq1t7d"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_fy07b"]
+[ext_resource type="Texture2D" uid="uid://ctjllrd8xapgl" path="res://2d/icon_i.png" id="2_iisnr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_autvq"]
+radius = 86.56
+
+[node name="Enemy_Pete" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(-697, -231)
+script = ExtResource("1_fy07b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_autvq")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("2_iisnr")
+metadata/_edit_lock_ = true

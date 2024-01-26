@@ -14,3 +14,8 @@ func _physics_process(delta):
 
 func moveTowardsPlayer():
 	velocity = global_position.direction_to(player.global_position)*speed
+
+func ApplyDamage(damage : int):
+	health -= damage
+	if health <= 0:
+		queue_free()
