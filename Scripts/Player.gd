@@ -9,6 +9,7 @@ extends CharacterBody2D
 var jokeCooldown : float = 0
 var tickleCooldown : float = 0
 var isTickling : bool = false
+var tickleInstance
 
 
 func _physics_process(delta):
@@ -33,9 +34,9 @@ func getDamage(amount :int):
 
 func tickle():
 	isTickling = true
-	var t = tickleArea.instantiate()
-	add_child(t)
-	t.transform = global_transform
+	tickleInstance = tickleArea.instantiate()
+	add_child(tickleInstance)
+	tickleInstance.transform = transform
 	pass
 
 func joke():
@@ -53,3 +54,4 @@ func _input(event):
 		joke()
 	elif event.is_action_released("tickle"):
 		isTickling = false
+		tickleInstance.queue_free()

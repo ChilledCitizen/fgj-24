@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://vo6cridhxlsd"]
+[gd_scene load_steps=4 format=3 uid="uid://vo6cridhxlsd"]
 
 [ext_resource type="Script" path="res://Scripts/tickle.gd" id="1_yp42k"]
+[ext_resource type="Texture2D" uid="uid://m4nyuo76e4r2" path="res://2d/hands_1.png" id="2_rdtia"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_niqhr"]
 radius = 115.27
@@ -10,3 +11,8 @@ script = ExtResource("1_yp42k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_niqhr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5.77, 5.77)
+texture = ExtResource("2_rdtia")

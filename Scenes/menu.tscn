@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca7vwvmicgxpc"]
+[gd_scene load_steps=4 format=3 uid="uid://ca7vwvmicgxpc"]
 
 [ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="1_dicgw"]
+[ext_resource type="Script" path="res://Scripts/menu.gd" id="1_ph2id"]
+[ext_resource type="PackedScene" uid="uid://ctyrodpltwa3q" path="res://Scenes/steamboat_deck.tscn" id="2_ey23b"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -9,6 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ph2id")
+playScene = ExtResource("2_ey23b")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

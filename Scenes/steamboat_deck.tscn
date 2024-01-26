@@ -1,14 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=10 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
+[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_ejwid"]
 [ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_tthdx"]
 [ext_resource type="Script" path="res://Scripts/Deck.gd" id="2_tkmyr"]
 [ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
 [ext_resource type="PackedScene" uid="uid://vo6cridhxlsd" path="res://Prefabs/tickle.tscn" id="6_uepah"]
 [ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
 [ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
+[ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="9_pb0n8"]
 
 [node name="SceneParent" type="Node2D"]
+script = ExtResource("1_ejwid")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position_smoothing_enabled = true
@@ -29,3 +32,12 @@ jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
 
 [node name="Enemy_Pete" parent="." instance=ExtResource("6_y70qp")]
+scale = Vector2(1.31, 1.31)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("9_pb0n8")
+text = "TESTasdasdasdasdasd"
