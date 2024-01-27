@@ -24,6 +24,10 @@ window/size/viewport_height=1080
 
 project/assembly_name="Fgj-24"
 
+[gui]
+
+theme/custom="res://new_theme.tres"
+
 [input]
 
 move_right={
