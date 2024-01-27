@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bqox14sck1761" path="res://2d/hands_1.png" id="2_rdtia"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_niqhr"]
-radius = 46.83
+radius = 56.4
 
 [node name="Tickle" type="Area2D" groups=["player_attack", "tickle"]]
 script = ExtResource("1_yp42k")

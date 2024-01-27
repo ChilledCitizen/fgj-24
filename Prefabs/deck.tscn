@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6wk3ybfjyc0a"]
+
+[ext_resource type="Script" path="res://Scenes/Deck.gd" id="1_8u0mj"]
+[ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_wduw7"]
+[ext_resource type="Shader" path="res://Shaders/deck.gdshader" id="3_iuflc"]
+[ext_resource type="Texture2D" uid="uid://xye84ctcvn7o" path="res://2d/photos_2018_7_16_fst_water-ripple.png" id="4_njyky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ka0kw"]
+shader = ExtResource("3_iuflc")
+
+[node name="Deck" type="Node2D" node_paths=PackedStringArray("Floor", "River")]
+script = ExtResource("1_8u0mj")
+Floor = NodePath("Floor")
+River = NodePath("River")
+
+[node name="Floor" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+rotation = 1.5708
+scale = Vector2(1.319, 1)
+texture = ExtResource("1_wduw7")
+region_enabled = true
+region_rect = Rect2(0, 0, 1080, 1920)
+
+[node name="River" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_ka0kw")
+position = Vector2(-36, 23.5)
+scale = Vector2(1.24063, 1.78056)
+texture = ExtResource("4_njyky")
+region_enabled = true
+region_rect = Rect2(0, 0, 1920, 1080)

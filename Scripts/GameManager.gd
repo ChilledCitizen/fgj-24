@@ -7,6 +7,7 @@ class_name GameManager
 @export var StartEnemyAmount : int = 5
 @export var EnemySpwanRate : float = 0.5
 @export var MaxEnemies : int = 15
+@export var Deck : Deck
 var MainMenu : PackedScene
 var enemies : Array
 var laughtered : int = 0
@@ -16,6 +17,7 @@ var spawnTimer : int = 0
 
 
 func _ready():
+	randomize()
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
 	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
@@ -31,15 +33,22 @@ func _ready():
 			enemies.append(child)
 			child.tree_exited.connect(_on_enemy_slain)
 			print_debug("added enemy")
+			
+	
 	
 func _physics_process(delta):
-	if spawnTimer > EnemySpwanRate*60:
+	if spawnTimer >= EnemySpwanRate*60:
 		spawnRandomEnemy()
 		spawnTimer = 0
 	else:
 		spawnTimer+=1	
 	
-	
+	CheckPlayerOverboard()
+
+func CheckPlayerOverboard():
+	if Player.global_position > Deck.floorArea:
+		get_tree().change_scene_to_packed(MainMenu)
+
 func _on_enemy_slain():
 	updateLaughtered()
 	enemies.pop_front()

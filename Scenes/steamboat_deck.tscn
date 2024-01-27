@@ -1,21 +1,23 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=9 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
-[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_ejwid"]
-[ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_tthdx"]
-[ext_resource type="Script" path="res://Scripts/Deck.gd" id="2_tkmyr"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ejwid"]
 [ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
 [ext_resource type="PackedScene" uid="uid://vo6cridhxlsd" path="res://Prefabs/tickle.tscn" id="6_uepah"]
 [ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
 [ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
+[ext_resource type="PackedScene" uid="uid://b6wk3ybfjyc0a" path="res://Prefabs/deck.tscn" id="8_ogywo"]
 [ext_resource type="PackedScene" uid="uid://4kjd68liof5x" path="res://UI.tscn" id="9_3evd6"]
 [ext_resource type="AudioStream" uid="uid://b4h355elm6kof" path="res://Sound/big_band_big_trouble.wav" id="10_i5ggd"]
 
-[node name="SceneParent" type="Node2D" node_paths=PackedStringArray("UI", "Player")]
+[node name="SceneParent" type="Node2D" node_paths=PackedStringArray("UI", "Player", "Deck")]
 script = ExtResource("1_ejwid")
 UI = NodePath("CanvasLayer/UI")
 Player = NodePath("Player")
 EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp")])
+EnemySpwanRate = 0.1
+MaxEnemies = 30
+Deck = NodePath("Deck")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -26,21 +28,9 @@ position_smoothing_enabled = true
 script = ExtResource("1_dqxwu")
 player = NodePath("../Player")
 
-[node name="Deck" type="Sprite2D" parent="."]
-texture_repeat = 2
-rotation = 1.5708
-scale = Vector2(1.319, 1)
-texture = ExtResource("1_tthdx")
-region_enabled = true
-region_rect = Rect2(0, 0, 1080, 1920)
-script = ExtResource("2_tkmyr")
-
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
 jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_i5ggd")
-volume_db = -7.561
-autoplay = true
-bus = &"Music"
+[node name="Deck" parent="." instance=ExtResource("8_ogywo")]
+metadata/_edit_lock_ = true
