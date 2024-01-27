@@ -2,10 +2,11 @@ extends CharacterBody2D
 class_name Player
 
 @export var speed : float = 400
+@export var tickleDist : float = 100
 @export var jokeProjectile : PackedScene
 @export var tickleArea : PackedScene
 @export var health : int = 100
-@export var jokeCooldownTime : float = 1
+@export var jokeCooldownTime : float = 0.3
 @export var tickleCooldownTime : float = 1
 var jokeCooldown : float = 0
 var tickleCooldown : float = 0
@@ -38,13 +39,14 @@ func tickle():
 	isTickling = true
 	tickleInstance = tickleArea.instantiate()
 	add_child(tickleInstance)
-	tickleInstance.transform = transform
+	tickleInstance.global_position = global_position+(Vector2(tickleDist, tickleDist)*(get_global_mouse_position() - global_position).normalized())
 	pass
 
 func joke():
 	var j = jokeProjectile.instantiate()
 	owner.add_child(j)
 	j.transform = global_transform
+	j.direction = get_global_mouse_position() - global_position
 	jokeCooldown = jokeCooldownTime * 60
 	pass
 

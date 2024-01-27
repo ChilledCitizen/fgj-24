@@ -37,6 +37,3 @@ script = ExtResource("2_tkmyr")
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
 jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
-
-[node name="Enemy_Pete" parent="." instance=ExtResource("6_y70qp")]
-position = Vector2(-382, -331)

@@ -51,5 +51,5 @@ func spawnRandomEnemy():
 		var r = rand.randi_range(0, EnemyTypes.size()-1)
 		var newEnemy : Enemy = EnemyTypes[r].instantiate()
 		add_child(newEnemy)
-		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+400), rand.randi_range(Player.global_position.y+200,Player.global_position.y+400))
+		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+800), rand.randi_range(Player.global_position.y+200,Player.global_position.y+800))
 		enemies.append(newEnemy)
