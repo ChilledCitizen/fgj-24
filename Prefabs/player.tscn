@@ -1,19 +1,90 @@
-[gd_scene load_steps=4 format=3 uid="uid://dg7nnj4kcdjpi"]
+[gd_scene load_steps=13 format=3 uid="uid://dg7nnj4kcdjpi"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_k6fkh"]
+[ext_resource type="Texture2D" uid="uid://dtd4ohc31eqb1" path="res://2d/mickey_dread_idle_1.png" id="2_akm1v"]
 [ext_resource type="Texture2D" uid="uid://btfb77ehqxyyq" path="res://2d/mickey_happy_idle_1.png" id="2_we8hp"]
+[ext_resource type="Texture2D" uid="uid://dfohr36vd8dxa" path="res://2d/mickey_dread_walk_1.png" id="3_f8yj6"]
+[ext_resource type="Texture2D" uid="uid://boh11ds83rlmn" path="res://2d/mickey_happy_walk_1.png" id="3_p3xhq"]
+[ext_resource type="Texture2D" uid="uid://iyqwld7k38cc" path="res://2d/mickey_happy_walk_2.png" id="4_av34h"]
+[ext_resource type="Texture2D" uid="uid://cjgonsi5s7dax" path="res://2d/mickey_dread_walk_2.png" id="4_ysf8m"]
+[ext_resource type="Texture2D" uid="uid://bjtw0herlibju" path="res://2d/mickey_neutral_idle_1.png" id="6_aom37"]
+[ext_resource type="Texture2D" uid="uid://cafxr044osb80" path="res://2d/mickey_neutral_walk_1.png" id="7_iv65o"]
+[ext_resource type="Texture2D" uid="uid://byfyj31ye4yny" path="res://2d/mickey_neutral_walk_2.png" id="8_fhgai"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw5rk"]
 radius = 47.37
 height = 162.01
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_pesrj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_akm1v")
+}],
+"loop": true,
+"name": &"dread_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_f8yj6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ysf8m")
+}],
+"loop": true,
+"name": &"dread_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_we8hp")
+}],
+"loop": true,
+"name": &"happy_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_p3xhq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_av34h")
+}],
+"loop": true,
+"name": &"happy_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_aom37")
+}],
+"loop": true,
+"name": &"neutral_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_iv65o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fhgai")
+}],
+"loop": true,
+"name": &"neutral_walk",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_k6fkh")
+jokeCooldownTime = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qw5rk")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2.97, 2.97)
-texture = ExtResource("2_we8hp")
+sprite_frames = SubResource("SpriteFrames_pesrj")
+animation = &"happy_idle"
+autoplay = "happy_idle"

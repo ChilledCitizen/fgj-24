@@ -12,7 +12,18 @@ var jokeCooldown : float = 0
 var tickleCooldown : float = 0
 var isTickling : bool = false
 var tickleInstance
+var sprite : AnimatedSprite2D
 
+enum PlayerState {
+	HAPPY,
+	NEUTRAL,
+	DREAD,
+}
+
+var player_state : PlayerState = PlayerState.DREAD
+
+func _ready():
+	sprite = get_node("Sprite2D")
 
 func _physics_process(delta):
 	
@@ -20,13 +31,38 @@ func _physics_process(delta):
 		get_input()
 		move_and_slide()
 	
-	if(jokeCooldown > 0):
+	if (jokeCooldown > 0):
 		jokeCooldown -= 1
-	
-	#pass
-	
+
+func get_animation_name(animation_type : String) -> String:
+	var state = "neutral"
+
+	match player_state:
+		PlayerState.HAPPY:
+			state = "happy"
+		PlayerState.NEUTRAL:
+			state = "neutral"
+		PlayerState.DREAD:
+			state = "dread"
+
+	return state + "_" + animation_type
+
+func play_animation(input : Vector2):
+	if input.x == 0 and input.y == 0:
+		sprite.play(get_animation_name("idle"))
+		return
+
+	if input.x < 0 and transform.x.x > 0:
+		transform.x *= -1
+
+	if input.x > 0 and transform.x.x < 0:
+		transform.x *= -1
+
+	sprite.play(get_animation_name("walk"))
+
 func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	play_animation(input_direction)
 	velocity = input_direction * speed
 	
 func ApplyDamage(amount :int):

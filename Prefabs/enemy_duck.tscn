@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://10pxmlctvvhs"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_8c1ig"]
+[ext_resource type="Texture2D" uid="uid://bxt2cetfdcg24" path="res://2d/duck_laugh_1.png" id="2_jvifa"]
+[ext_resource type="Texture2D" uid="uid://bw5uiahgm5np1" path="res://2d/duck_laugh_2.png" id="3_rk5dv"]
+[ext_resource type="Texture2D" uid="uid://bxtfebrx5dic1" path="res://2d/duck_walk_1.png" id="4_enp5e"]
+[ext_resource type="Texture2D" uid="uid://c2px4welvfojr" path="res://2d/duck_walk_2.png" id="5_b6ncp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
+radius = 54.85
+height = 162.02
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grch7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jvifa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rk5dv")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_enp5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_b6ncp")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
+script = ExtResource("1_8c1ig")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("CapsuleShape2D_3cefm")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2.325, 2.325)
+sprite_frames = SubResource("SpriteFrames_grch7")
+animation = &"laugh"
+autoplay = "walk"
+frame_progress = 0.307553
+metadata/_edit_lock_ = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=11 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_ejwid"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
 [ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
 [ext_resource type="PackedScene" uid="uid://4kjd68liof5x" path="res://UI.tscn" id="9_3evd6"]
+[ext_resource type="AudioStream" uid="uid://b4h355elm6kof" path="res://Sound/big_band_big_trouble.wav" id="10_i5ggd"]
 
 [node name="SceneParent" type="Node2D" node_paths=PackedStringArray("UI", "Player")]
 script = ExtResource("1_ejwid")
@@ -37,3 +38,9 @@ script = ExtResource("2_tkmyr")
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
 jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_i5ggd")
+volume_db = -7.561
+autoplay = true
+bus = &"Music"
