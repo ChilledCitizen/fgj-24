@@ -45,8 +45,8 @@ func _physics_process(delta):
 	CheckPlayerOverboard()
 
 func CheckPlayerOverboard():
-	if Player.global_position > Deck.floorArea:
-		get_tree().change_scene_to_packed(MainMenu)
+	if !Deck.IsObjectOnDeck(Player):
+		_on_player_killed()
 
 func _on_enemy_slain():
 	updateLaughtered()
