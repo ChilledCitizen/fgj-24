@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bqox14sck1761" path="res://2d/hands_1.png" id="2_rdtia"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_niqhr"]
-radius = 115.27
+radius = 46.83
 
-[node name="Tickle" type="Area2D" groups=["player_attack"]]
+[node name="Tickle" type="Area2D" groups=["player_attack", "tickle"]]
 script = ExtResource("1_yp42k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -14,5 +14,5 @@ shape = SubResource("CircleShape2D_niqhr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(5.77, 5.77)
+scale = Vector2(2.83, 2.83)
 texture = ExtResource("2_rdtia")

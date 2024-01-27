@@ -8,8 +8,7 @@ func _ready():
 	area_entered.connect(on_body_entered)
 	
 func _physics_process(delta):
-	if enemy:
-		enemy.ApplyDamage(damagePerSecond*delta)
+	pass
 
 func on_body_entered(body: Node2D):
 	if body.is_in_group("enemy"):

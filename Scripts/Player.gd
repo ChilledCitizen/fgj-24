@@ -53,7 +53,7 @@ func joke():
 func _input(event):
 	if event.is_action_pressed("tickle"):
 		tickle()
-	if event.is_action("joke") && jokeCooldown == 0:
+	if event.is_action("joke") && jokeCooldown == 0 && !isTickling:
 		print_debug("joked")
 		joke()
 	elif event.is_action_released("tickle"):

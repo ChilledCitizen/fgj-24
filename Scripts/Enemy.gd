@@ -10,6 +10,9 @@ var inEnemy : bool = false
 var neighbour : Enemy
 var speed
 var rand
+var tickling : bool = false
+var hit : bool = false
+var tickleDamage = 0
 #var rngVector : Vector2 = Vector2(-100, 100)
 
 func _ready():
@@ -23,10 +26,10 @@ func _ready():
 	speed = rand.randi_range(base_speed/2, base_speed*2)
 	
 func _physics_process(delta):
-	#if !inEnemy:
-	global_position += global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10))) * speed * delta 
-	#else:
-		#global_position += global_position.direction_to(-neighbour.position) * speed * delta 
+	if !tickling && !hit:
+		global_position += global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10))) * speed * delta 
+	elif tickling:
+		ApplyDamage(tickleDamage)
 
 func ApplyDamage(damage : int):
 	health -= damage
@@ -40,7 +43,15 @@ func on_body_entered(body :Node2D):
 	elif body.is_in_group("enemy"):
 		inEnemy = true
 		neighbour = body
+	elif body.is_in_group("player_attack"):
+		if body.is_in_group("tickle"):
+			tickling = true
+			tickleDamage = body.damagePerSecond
+		hit = true
 
 func _on_body_exited(body :Node2D):
 	inEnemy = false
 	neighbour = null
+	if body.is_in_group("player_attack"):
+		tickling = false
+		hit = false
