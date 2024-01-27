@@ -1,7 +1,7 @@
 extends Area2D
 class_name Enemy
 
-@export var base_speed : float = 150
+@export var base_speed : float = 100
 @export var health : int = 100
 @export var damage : int = 20
 @onready var collision_shape_2d = %CollisionShape2D
@@ -45,9 +45,11 @@ func on_body_entered(body :Node2D):
 		neighbour = body
 	elif body.is_in_group("player_attack"):
 		if body.is_in_group("tickle"):
-			tickling = true
-			tickleDamage = body.damagePerSecond
-		hit = true
+			if body.hasTarget == false:
+				tickling = true
+				tickleDamage = body.damagePerSecond
+		else:
+			hit = true
 
 func _on_body_exited(body :Node2D):
 	inEnemy = false

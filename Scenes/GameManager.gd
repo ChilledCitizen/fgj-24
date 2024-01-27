@@ -11,6 +11,7 @@ var MainMenu : PackedScene
 var enemies : Array
 var laughtered : int = 0
 var laughteredNumber 
+var spawnTimer : int = 0
 @onready var rand : RandomNumberGenerator = RandomNumberGenerator.new()
 
 
@@ -32,11 +33,16 @@ func _ready():
 			print_debug("added enemy")
 	
 func _physics_process(delta):
-	pass
+	if spawnTimer > EnemySpwanRate*60:
+		spawnRandomEnemy()
+		spawnTimer = 0
+	else:
+		spawnTimer+=1	
+	
 	
 func _on_enemy_slain():
 	updateLaughtered()
-	enemies.pop_back()
+	enemies.pop_front()
 
 func _on_player_killed():
 	get_tree().change_scene_to_packed(MainMenu)
