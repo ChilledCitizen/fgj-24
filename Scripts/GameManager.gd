@@ -37,7 +37,7 @@ func _ready():
 	
 	
 func _physics_process(delta):
-	if spawnTimer >= EnemySpwanRate:
+	if spawnTimer >= EnemySpwanRate && len(enemies) < MaxEnemies:
 		spawnRandomEnemy()
 		print_debug("added enemy in update")
 		spawnTimer = 0

@@ -3,10 +3,10 @@ class_name Enemy
 
 @export var base_speed : float = 100
 @export var health : int = 100
-@export var damage : int = 20
+@export var damage : int = 5
 @onready var collision_shape_2d = %CollisionShape2D
 var player
-var inEnemy : bool = false
+#var inEnemy : bool = false
 var neighbour : Enemy
 var speed
 var rand
@@ -69,8 +69,9 @@ func on_body_entered(body :Node2D):
 		var player : Player = body
 		player.ApplyDamage(damage)
 	elif body.is_in_group("enemy"):
-		inEnemy = true
-		neighbour = body
+		pass
+		#inEnemy = true
+		#neighbour = body
 	elif body.is_in_group("player_attack"):
 		if body.is_in_group("tickle"):
 			if body.hasTarget == false:
@@ -80,8 +81,8 @@ func on_body_entered(body :Node2D):
 			hit = true
 
 func _on_body_exited(body :Node2D):
-	inEnemy = false
-	neighbour = null
+	#inEnemy = false
+	#neighbour = null
 	if body.is_in_group("player_attack"):
 		tickling = false
 		hit = false

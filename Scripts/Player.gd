@@ -87,8 +87,8 @@ func get_input():
 	velocity = input_direction * speed
 	
 func ApplyDamage(amount :int):
-	print_debug("player damaged")
-	health =- amount
+	#print_debug("player damaged")
+	health -= amount
 	if health < 0 :
 		visible = false
 

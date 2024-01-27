@@ -17,7 +17,7 @@ Player = NodePath("Player")
 EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp")])
 StartEnemyAmount = 0
 EnemySpwanRate = 1.0
-MaxEnemies = 3
+MaxEnemies = 10
 Deck = NodePath("Deck")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
