@@ -5,7 +5,7 @@ var enemy : Enemy
 
 
 func _ready():
-	body_entered.connect(on_body_entered)
+	area_entered.connect(on_body_entered)
 	
 func _physics_process(delta):
 	if enemy:

@@ -4,16 +4,26 @@ class_name GameManager
 @export var UI : Control
 @export var Player : CharacterBody2D
 @export var EnemyTypes : Array[PackedScene]
+@export var StartEnemyAmount : int = 5
+@export var EnemySpwanRate : float = 0.5
+@export var MaxEnemies : int = 15
 var MainMenu : PackedScene
-var enemies : Array[CharacterBody2D]
+var enemies : Array
 var laughtered : int = 0
 var laughteredNumber 
+@onready var rand : RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 func _ready():
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
+	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
+	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
+	
+	for i in StartEnemyAmount:
+		spawnRandomEnemy()
+	
 	var children = get_children()
 	for child in children:
 		if child.is_in_group("enemy"):
@@ -24,8 +34,9 @@ func _ready():
 func _physics_process(delta):
 	pass
 	
-func _on_enemy_slain():
+func _on_enemy_slain(a):
 	updateLaughtered()
+	enemies.pop_back()
 
 func _on_player_killed():
 	get_tree().change_scene_to_packed(MainMenu)
@@ -34,3 +45,11 @@ func updateLaughtered():
 	laughtered += 1
 	laughteredNumber.text = str(laughtered)
 	print_debug("update laughtered")
+	
+func spawnRandomEnemy():
+	if enemies.size() < MaxEnemies:
+		var r = rand.randi_range(0, EnemyTypes.size()-1)
+		var newEnemy : Enemy = EnemyTypes[r].instantiate()
+		add_child(newEnemy)
+		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+400), rand.randi_range(Player.global_position.y+200,Player.global_position.y+400))
+		enemies.append(newEnemy)

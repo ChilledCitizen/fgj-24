@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var speed : float = 400
 @export var jokeProjectile : PackedScene
@@ -27,10 +28,11 @@ func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_direction * speed
 	
-func getDamage(amount :int):
+func ApplyDamage(amount :int):
+	print_debug("player damaged")
 	health =- amount
 	if health < 0 :
-		pass #game over
+		visible = false
 
 func tickle():
 	isTickling = true

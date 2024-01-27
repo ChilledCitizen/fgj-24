@@ -7,8 +7,7 @@
 radius = 54.85
 height = 162.02
 
-[node name="Enemy_Pete" type="CharacterBody2D" groups=["enemy"]]
-position = Vector2(-697, -231)
+[node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_fy07b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
