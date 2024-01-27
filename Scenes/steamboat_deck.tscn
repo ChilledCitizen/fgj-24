@@ -15,8 +15,9 @@ script = ExtResource("1_ejwid")
 UI = NodePath("CanvasLayer/UI")
 Player = NodePath("Player")
 EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp")])
-EnemySpwanRate = 0.1
-MaxEnemies = 30
+StartEnemyAmount = 0
+EnemySpwanRate = 1.0
+MaxEnemies = 3
 Deck = NodePath("Deck")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -24,6 +25,7 @@ Deck = NodePath("Deck")
 [node name="UI" parent="CanvasLayer" instance=ExtResource("9_3evd6")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 script = ExtResource("1_dqxwu")
 player = NodePath("../Player")
@@ -33,6 +35,7 @@ jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
 
 [node name="Deck" parent="." instance=ExtResource("8_ogywo")]
+Size = 1.0
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

@@ -8,20 +8,19 @@ class_name Deck
 #@export var sprite : Sprite2D
 var width : float
 var height : float
-var floorExtents : Array[Vector2]
+var floorArea = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	width = DisplayServer.screen_get_size().x
 	height = DisplayServer.screen_get_size().y
-	Floor.region_rect = Rect2(0,0,width*Size,height*Size)
-	River.region_rect = Rect2(0,0, width*Size*1.1, height*Size*1.1)
+	var scale = sqrt(pow(width,2) + pow(height,2))
+	Floor.region_rect = Rect2(0,0,scale*Size,scale*Size)
+	River.region_rect = Rect2(0,0, scale*Size*2, scale*Size*2)
 	
-	
-	
+	floorArea = Floor.get_rect().size
+	print_debug(floorArea)
 
 func _physics_process(delta):
 	pass
 	
-func IsObjectOnDeck(Obj :Node2D):
-	return Floor.region_rect.has_point(Obj.global_position)

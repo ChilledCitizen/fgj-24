@@ -18,6 +18,7 @@ var step_sounds : Array[AudioStreamPlayer2D]
 var audio_listener : AudioListener2D
 var tickle_sound : AudioStreamPlayer2D
 var joke_sound : AudioStreamPlayer2D
+var spriteSize : Vector2
 
 enum PlayerState {
 	HAPPY,
@@ -30,6 +31,7 @@ var player_state : PlayerState = PlayerState.DREAD
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
 	sprite = get_node("Sprite2D")
+	spriteSize = sprite.sprite_frames.get_frame_texture("happy_idle",0).get_size() * scale
 
 	for sound in step_sound_parent.get_children():
 		step_sounds.append(sound)
