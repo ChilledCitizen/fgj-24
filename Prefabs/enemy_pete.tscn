@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://5j6dajqq1t7d"]
+[gd_scene load_steps=13 format=3 uid="uid://5j6dajqq1t7d"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_fy07b"]
 [ext_resource type="Texture2D" uid="uid://dv4ys8w4odhdx" path="res://2d/pete_laugh_1.png" id="2_3kobl"]
 [ext_resource type="Texture2D" uid="uid://bc6vor1gqikv" path="res://2d/pete_walk_1.png" id="2_gwagw"]
 [ext_resource type="Texture2D" uid="uid://dpu5ha6j7lbyd" path="res://2d/pete_laugh_2.png" id="3_1eprs"]
 [ext_resource type="Texture2D" uid="uid://c3eagf32hkn52" path="res://2d/pete_walk_2.png" id="3_06gt4"]
+[ext_resource type="AudioStream" uid="uid://yiigoek4w2lp" path="res://Sound/pete_stomp_1.wav" id="6_1f1ri"]
+[ext_resource type="AudioStream" uid="uid://dm8y0wtadq51v" path="res://Sound/pete_stomp_2.wav" id="7_3h65c"]
+[ext_resource type="AudioStream" uid="uid://bh871qogf4j2d" path="res://Sound/pete_stomp_3.wav" id="8_hga0x"]
+[ext_resource type="AudioStream" uid="uid://bh2bogovrism5" path="res://Sound/pete_stomp_4.wav" id="9_lo2lq"]
+[ext_resource type="AudioStream" uid="uid://or44lbv2u1ai" path="res://Sound/pete_stomp_5.wav" id="10_uvic0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
@@ -47,8 +52,35 @@ metadata/_edit_lock_ = true
 texture_filter = 1
 scale = Vector2(2.325, 2.325)
 sprite_frames = SubResource("SpriteFrames_grch7")
-animation = &"laugh"
+animation = &"walk"
 autoplay = "walk"
-frame = 1
-frame_progress = 0.753558
 metadata/_edit_lock_ = true
+
+[node name="StepSounds" type="Node2D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("6_1f1ri")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("7_3h65c")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("8_hga0x")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step4" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("9_lo2lq")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step5" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("10_uvic0")
+volume_db = 8.0
+bus = &"SFX"
+
+[connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]

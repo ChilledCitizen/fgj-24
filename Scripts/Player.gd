@@ -13,6 +13,11 @@ var tickleCooldown : float = 0
 var isTickling : bool = false
 var tickleInstance
 var sprite : AnimatedSprite2D
+var step_sound_parent : Node
+var step_sounds : Array[AudioStreamPlayer2D]
+var audio_listener : AudioListener2D
+var tickle_sound : AudioStreamPlayer2D
+var joke_sound : AudioStreamPlayer2D
 
 enum PlayerState {
 	HAPPY,
@@ -22,8 +27,22 @@ enum PlayerState {
 
 var player_state : PlayerState = PlayerState.DREAD
 
-func _ready():
+func init_step_sounds():
+	step_sound_parent = get_node("StepSounds")
 	sprite = get_node("Sprite2D")
+
+	for sound in step_sound_parent.get_children():
+		step_sounds.append(sound)
+
+func _ready():
+	audio_listener = get_node("AudioListener2D")
+	audio_listener.make_current()
+	
+	tickle_sound = get_node("Tickle")
+	joke_sound = get_node("Joke")
+
+	init_step_sounds()
+	randomize()
 
 func _physics_process(delta):
 	
@@ -76,6 +95,7 @@ func tickle():
 	tickleInstance = tickleArea.instantiate()
 	add_child(tickleInstance)
 	tickleInstance.global_position = global_position+(Vector2(tickleDist, tickleDist)*(get_global_mouse_position() - global_position).normalized())
+	tickle_sound.play()
 	pass
 
 func joke():
@@ -84,7 +104,21 @@ func joke():
 	j.transform = global_transform
 	j.direction = get_global_mouse_position() - global_position
 	jokeCooldown = jokeCooldownTime * 60
-	pass
+	joke_sound.play()
+
+func play_random_step_sound():
+	if !sprite.animation.ends_with("_walk"):
+		return
+		
+	if sprite.frame != 0:
+		return
+
+	var index = randi_range(0, 4)
+
+	if index >= len(step_sounds):
+		return
+
+	step_sounds[index].play()
 
 func _input(event):
 	if event.is_action_pressed("tickle"):
@@ -95,3 +129,9 @@ func _input(event):
 	elif event.is_action_released("tickle"):
 		isTickling = false
 		tickleInstance.queue_free()
+		tickle_sound.stop()
+		tickle_sound.seek(0)
+
+
+func _on_sprite_2d_frame_changed():
+	play_random_step_sound()

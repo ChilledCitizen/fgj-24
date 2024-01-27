@@ -5,6 +5,8 @@ var play : Button
 var credits : Button
 var exit : Button
 
+var ui_hover_audio : AudioStreamPlayer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -13,6 +15,8 @@ func _ready():
 	play = get_node("CenterContainer/VBoxContainer/Play")
 	credits = get_node("CenterContainer/VBoxContainer/Credits")
 	exit = get_node("CenterContainer/VBoxContainer/Exit")
+	
+	ui_hover_audio = get_node("UIHover")
 	
 	play.pressed.connect(_on_play_pressed)
 	credits.pressed.connect(_on_credits_pressed)
@@ -26,3 +30,12 @@ func _on_credits_pressed():
 
 func _on_exit_pressed():
 	get_tree().quit()
+
+func _on_play_mouse_entered():
+	ui_hover_audio.play()
+
+func _on_credits_mouse_entered():
+	ui_hover_audio.play()
+
+func _on_exit_mouse_entered():
+	ui_hover_audio.play()

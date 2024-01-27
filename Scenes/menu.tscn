@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca7vwvmicgxpc"]
+[gd_scene load_steps=6 format=3 uid="uid://ca7vwvmicgxpc"]
 
 [ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="1_dicgw"]
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_ph2id"]
 [ext_resource type="Texture2D" uid="uid://cgbcputj0ults" path="res://2d/UI_filter.png" id="3_m0lic"]
 [ext_resource type="AudioStream" uid="uid://dqsp0tx8ljfv2" path="res://Sound/menu.wav" id="3_oqghl"]
+[ext_resource type="AudioStream" uid="uid://fcaahvkryv3o" path="res://Sound/ui_click_1.wav" id="5_mcus8"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -33,8 +34,8 @@ theme = ExtResource("1_dicgw")
 layout_mode = 2
 theme = ExtResource("1_dicgw")
 theme_type_variation = &"Header"
-text = "Kikki Hiiren
-Suuri Seikkailu"
+text = "Wilhelm of
+Steamboat"
 horizontal_alignment = 1
 
 [node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
@@ -67,3 +68,13 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_m0lic")
 metadata/_edit_lock_ = true
+
+[node name="UIHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_mcus8")
+volume_db = -6.442
+pitch_scale = 1.11
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_mouse_entered"]
+[connection signal="mouse_entered" from="CenterContainer/VBoxContainer/Credits" to="." method="_on_credits_mouse_entered"]
+[connection signal="mouse_entered" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
