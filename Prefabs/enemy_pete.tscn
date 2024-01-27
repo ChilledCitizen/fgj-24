@@ -11,6 +11,7 @@ height = 162.02
 script = ExtResource("1_fy07b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 shape = SubResource("CapsuleShape2D_3cefm")
 metadata/_edit_lock_ = true
 
