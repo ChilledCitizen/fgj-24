@@ -15,7 +15,6 @@ var laughteredNumber
 var spawnTimer : int = 0
 @onready var rand : RandomNumberGenerator = RandomNumberGenerator.new()
 
-
 func _ready():
 	randomize()
 	#Player.tree_exited.connect(_on_player_killed)
@@ -68,3 +67,4 @@ func spawnRandomEnemy():
 		add_child(newEnemy)
 		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+800), rand.randi_range(Player.global_position.y+200,Player.global_position.y+800))
 		enemies.append(newEnemy)
+		

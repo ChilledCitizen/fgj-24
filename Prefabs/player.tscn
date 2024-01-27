@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dg7nnj4kcdjpi"]
+[gd_scene load_steps=24 format=3 uid="uid://dg7nnj4kcdjpi"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_k6fkh"]
 [ext_resource type="Texture2D" uid="uid://dtd4ohc31eqb1" path="res://2d/mickey_dread_idle_1.png" id="2_akm1v"]
@@ -7,9 +7,20 @@
 [ext_resource type="Texture2D" uid="uid://boh11ds83rlmn" path="res://2d/mickey_happy_walk_1.png" id="3_p3xhq"]
 [ext_resource type="Texture2D" uid="uid://iyqwld7k38cc" path="res://2d/mickey_happy_walk_2.png" id="4_av34h"]
 [ext_resource type="Texture2D" uid="uid://cjgonsi5s7dax" path="res://2d/mickey_dread_walk_2.png" id="4_ysf8m"]
+[ext_resource type="Texture2D" uid="uid://05x6k0ygak47" path="res://2d/mickey_drown_1.png" id="5_m48vh"]
 [ext_resource type="Texture2D" uid="uid://bjtw0herlibju" path="res://2d/mickey_neutral_idle_1.png" id="6_aom37"]
+[ext_resource type="Texture2D" uid="uid://c52xgj3ueesnt" path="res://2d/mickey_drown_2.png" id="6_clruv"]
 [ext_resource type="Texture2D" uid="uid://cafxr044osb80" path="res://2d/mickey_neutral_walk_1.png" id="7_iv65o"]
+[ext_resource type="Texture2D" uid="uid://df3lilko2mxju" path="res://2d/mickey_drown_3.png" id="7_wuxpd"]
+[ext_resource type="Texture2D" uid="uid://cyrnjbydmk63n" path="res://2d/mickey_drown_4.png" id="8_2njh6"]
 [ext_resource type="Texture2D" uid="uid://byfyj31ye4yny" path="res://2d/mickey_neutral_walk_2.png" id="8_fhgai"]
+[ext_resource type="AudioStream" uid="uid://dytxtvivk63wc" path="res://Sound/mickey_step_1.wav" id="11_c46wd"]
+[ext_resource type="AudioStream" uid="uid://1l86ly2s1cjh" path="res://Sound/mickey_step_2.wav" id="12_6qhob"]
+[ext_resource type="AudioStream" uid="uid://bvt1f0ywa7sp1" path="res://Sound/mickey_step_3.wav" id="13_2pngc"]
+[ext_resource type="AudioStream" uid="uid://trgm3uwf0s4w" path="res://Sound/mickey_step_4.wav" id="14_c08om"]
+[ext_resource type="AudioStream" uid="uid://bo34teqiawwep" path="res://Sound/mickey_step_5.wav" id="15_sj33r"]
+[ext_resource type="AudioStream" uid="uid://bmkm43k25iegp" path="res://Sound/tickle_1.wav" id="16_ahbdk"]
+[ext_resource type="AudioStream" uid="uid://ddl2g2s2kemi8" path="res://Sound/laugh_spell_1.wav" id="17_oom4j"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw5rk"]
 radius = 47.37
@@ -34,6 +45,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"dread_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_m48vh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_clruv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wuxpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2njh6")
+}],
+"loop": true,
+"name": &"drown",
 "speed": 5.0
 }, {
 "frames": [{
@@ -86,5 +114,60 @@ shape = SubResource("CapsuleShape2D_qw5rk")
 texture_filter = 1
 scale = Vector2(2.97, 2.97)
 sprite_frames = SubResource("SpriteFrames_pesrj")
-animation = &"happy_idle"
+animation = &"drown"
 autoplay = "happy_idle"
+
+[node name="StepSounds" type="Node2D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("11_c46wd")
+volume_db = 7.0
+pitch_scale = 0.93
+max_polyphony = 5
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("12_6qhob")
+volume_db = 7.0
+pitch_scale = 0.93
+max_polyphony = 5
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("13_2pngc")
+volume_db = 7.0
+pitch_scale = 0.93
+max_polyphony = 5
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="Step4" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("14_c08om")
+volume_db = 7.0
+pitch_scale = 0.93
+max_polyphony = 5
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="Step5" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("15_sj33r")
+volume_db = 7.0
+pitch_scale = 0.93
+max_polyphony = 5
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
+
+[node name="Tickle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_ahbdk")
+bus = &"SFX"
+
+[node name="Joke" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_oom4j")
+bus = &"SFX"
+
+[connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]

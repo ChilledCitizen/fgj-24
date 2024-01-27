@@ -15,6 +15,17 @@ var hit : bool = false
 var tickleDamage = 0
 #var rngVector : Vector2 = Vector2(-100, 100)
 
+var step_sound_parent : Node
+var step_sounds : Array[AudioStreamPlayer2D]
+var sprite : AnimatedSprite2D
+var can_make_sound : bool = false
+
+func init_step_sounds():
+	step_sound_parent = get_node("StepSounds")
+	sprite = get_node("Sprite2D")
+	for sound in step_sound_parent.get_children():
+		step_sounds.append(sound)
+
 func _ready():
 	randomize()
 	player = get_tree().root.get_child(0).get_node("Player")
@@ -24,6 +35,7 @@ func _ready():
 	body_exited.connect(_on_body_exited)
 	rand = RandomNumberGenerator.new()
 	speed = rand.randi_range(base_speed/2, base_speed*2)
+	init_step_sounds()
 	
 func _physics_process(delta):
 	if !tickling && !hit:
@@ -35,6 +47,22 @@ func ApplyDamage(damage : int):
 	health -= damage
 	if health <= 0:
 		queue_free()
+		
+func play_random_step_sound():
+	if sprite.animation != "walk":
+		print("wrong anim")
+		return
+
+	if sprite.frame != 0:
+		return
+
+	var index = randi_range(0, len(step_sounds) - 1)
+
+	if index >= len(step_sounds):
+		print("index")
+		return
+
+	step_sounds[index].play()
 		
 func on_body_entered(body :Node2D):
 	if body.is_in_group("player"):
@@ -57,3 +85,6 @@ func _on_body_exited(body :Node2D):
 	if body.is_in_group("player_attack"):
 		tickling = false
 		hit = false
+
+func _on_sprite_2d_frame_changed():
+	play_random_step_sound()
