@@ -34,7 +34,7 @@ func _ready():
 func _physics_process(delta):
 	pass
 	
-func _on_enemy_slain(a):
+func _on_enemy_slain():
 	updateLaughtered()
 	enemies.pop_back()
 
