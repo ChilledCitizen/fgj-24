@@ -1,11 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://5j6dajqq1t7d"]
+[gd_scene load_steps=8 format=3 uid="uid://5j6dajqq1t7d"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_fy07b"]
-[ext_resource type="Texture2D" uid="uid://b00623bf1eyjl" path="res://2d/pete_idle_1.png" id="2_tj01m"]
+[ext_resource type="Texture2D" uid="uid://dv4ys8w4odhdx" path="res://2d/pete_laugh_1.png" id="2_3kobl"]
+[ext_resource type="Texture2D" uid="uid://bc6vor1gqikv" path="res://2d/pete_walk_1.png" id="2_gwagw"]
+[ext_resource type="Texture2D" uid="uid://dpu5ha6j7lbyd" path="res://2d/pete_laugh_2.png" id="3_1eprs"]
+[ext_resource type="Texture2D" uid="uid://c3eagf32hkn52" path="res://2d/pete_walk_2.png" id="3_06gt4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
 height = 162.02
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grch7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3kobl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1eprs")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gwagw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_06gt4")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_fy07b")
@@ -15,8 +43,12 @@ unique_name_in_owner = true
 shape = SubResource("CapsuleShape2D_3cefm")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2.325, 2.325)
-texture = ExtResource("2_tj01m")
+sprite_frames = SubResource("SpriteFrames_grch7")
+animation = &"laugh"
+autoplay = "walk"
+frame = 1
+frame_progress = 0.753558
 metadata/_edit_lock_ = true
