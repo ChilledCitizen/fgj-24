@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dg7nnj4kcdjpi"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_k6fkh"]
-[ext_resource type="Texture2D" uid="uid://d00jxy041t321" path="res://2d/mickey_idle_1.png" id="2_ntcak"]
+[ext_resource type="Texture2D" uid="uid://bjtw0herlibju" path="res://2d/mickey_neutral_idle_1.png" id="2_1ajfm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qw5rk"]
 radius = 47.37
@@ -16,4 +16,4 @@ shape = SubResource("CapsuleShape2D_qw5rk")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2.97, 2.97)
-texture = ExtResource("2_ntcak")
+texture = ExtResource("2_1ajfm")

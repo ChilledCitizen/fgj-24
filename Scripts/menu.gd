@@ -1,12 +1,15 @@
 extends Control
 
-@export var playScene : PackedScene
+var playScene : PackedScene
 var play : Button
 var credits : Button
 var exit : Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	playScene = ResourceLoader.load('res://Scenes/steamboat_deck.tscn')
+	
 	play = get_node("CenterContainer/VBoxContainer/Play")
 	credits = get_node("CenterContainer/VBoxContainer/Credits")
 	exit = get_node("CenterContainer/VBoxContainer/Exit")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://vo6cridhxlsd"]
 
 [ext_resource type="Script" path="res://Scripts/tickle.gd" id="1_yp42k"]
-[ext_resource type="Texture2D" uid="uid://m4nyuo76e4r2" path="res://2d/hands_1.png" id="2_rdtia"]
+[ext_resource type="Texture2D" uid="uid://bqox14sck1761" path="res://2d/hands_1.png" id="2_rdtia"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_niqhr"]
 radius = 115.27

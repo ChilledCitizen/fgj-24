@@ -1,20 +1,22 @@
 extends Node2D
 class_name GameManager
 
-@export var laughteredNumber : Label
+@export var UI : Control
 @export var Player : CharacterBody2D
 @export var EnemyTypes : Array[PackedScene]
-@export var MainMenu : PackedScene
+var MainMenu : PackedScene
 var enemies : Array[CharacterBody2D]
 var laughtered : int = 0
+var laughteredNumber 
 
 
 func _ready():
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
+	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
 	var children = get_children()
 	for child in children:
-		if child.is_in_group("enemies"):
+		if child.is_in_group("enemy"):
 			enemies.append(child)
 			child.tree_exited.connect(_on_enemy_slain)
 			print_debug("added enemy")
@@ -30,5 +32,5 @@ func _on_player_killed():
 
 func updateLaughtered():
 	laughtered += 1
-	laughteredNumber.text = laughtered as String
+	laughteredNumber.text = str(laughtered)
 	print_debug("update laughtered")

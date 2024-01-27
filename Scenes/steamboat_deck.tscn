@@ -1,22 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=10 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_ejwid"]
 [ext_resource type="Texture2D" uid="uid://bwo3c8c3lfpcm" path="res://2d/deck.jpg" id="1_tthdx"]
 [ext_resource type="Script" path="res://Scripts/Deck.gd" id="2_tkmyr"]
-[ext_resource type="PackedScene" uid="uid://ca7vwvmicgxpc" path="res://Scenes/menu.tscn" id="3_0m8kt"]
 [ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
 [ext_resource type="PackedScene" uid="uid://vo6cridhxlsd" path="res://Prefabs/tickle.tscn" id="6_uepah"]
 [ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
 [ext_resource type="PackedScene" uid="uid://dg2g350buqjvo" path="res://Prefabs/joke.tscn" id="7_hspfm"]
-[ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="9_pb0n8"]
+[ext_resource type="PackedScene" uid="uid://4kjd68liof5x" path="res://UI.tscn" id="9_3evd6"]
 
-[node name="SceneParent" type="Node2D" node_paths=PackedStringArray("laughteredNumber", "Player")]
+[node name="SceneParent" type="Node2D" node_paths=PackedStringArray("UI", "Player")]
 script = ExtResource("1_ejwid")
-laughteredNumber = NodePath("CanvasLayer/LaughteredNumber")
+UI = NodePath("CanvasLayer/UI")
 Player = NodePath("Player")
 EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp")])
-MainMenu = ExtResource("3_0m8kt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("9_3evd6")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 position_smoothing_enabled = true
@@ -35,23 +37,6 @@ script = ExtResource("2_tkmyr")
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
 jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 23.0
-theme = ExtResource("9_pb0n8")
-text = "Lauhgtered: "
-
-[node name="LaughteredNumber" type="Label" parent="CanvasLayer"]
-offset_left = 715.0
-offset_top = 5.0
-offset_right = 937.0
-offset_bottom = 167.0
-theme = ExtResource("9_pb0n8")
-text = "0"
-horizontal_alignment = 1
 
 [node name="Enemy_Pete" parent="." instance=ExtResource("6_y70qp")]
 position = Vector2(-382, -331)

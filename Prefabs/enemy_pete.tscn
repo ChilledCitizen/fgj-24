@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://5j6dajqq1t7d"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_fy07b"]
-[ext_resource type="Texture2D" uid="uid://vu0el8plat24" path="res://2d/pete_idle_1.png" id="2_tj01m"]
+[ext_resource type="Texture2D" uid="uid://b00623bf1eyjl" path="res://2d/pete_idle_1.png" id="2_tj01m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
