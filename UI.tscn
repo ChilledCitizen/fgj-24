@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dtd4ohc31eqb1" path="res://2d/mickey_dread_idle_1.png" id="4_10ytm"]
 [ext_resource type="Texture2D" uid="uid://b7ehco6ka7unk" path="res://2d/mickey_dead_1.png" id="5_dgy6c"]
 
-[node name="UI" type="Control" node_paths=PackedStringArray("rect")]
+[node name="UI" type="Control" node_paths=PackedStringArray("rect", "gameOver", "gameOver_buttons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f8n0m")
 rect = NodePath("MickeyFace/Control/TextureRect")
+gameOver = NodePath("GameOver")
+gameOver_buttons = [NodePath("GameOver/Buttons/Retry"), NodePath("GameOver/Buttons/Exit")]
 faces = Array[Texture2D]([ExtResource("1_vqqwp"), ExtResource("3_w474r"), ExtResource("4_10ytm"), ExtResource("5_dgy6c")])
 
 [node name="MickeyFace" type="Control" parent="."]
@@ -108,6 +110,65 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameOver" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.254902, 0.254902, 0.254902, 0.396078)
+
+[node name="Buttons" type="VBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -49.995
+offset_right = 155.0
+offset_bottom = 204.006
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+
+[node name="Retry" type="Button" parent="GameOver/Buttons"]
+layout_mode = 2
+theme = ExtResource("2_4k8jc")
+text = "Retry"
+
+[node name="Exit" type="Button" parent="GameOver/Buttons"]
+layout_mode = 2
+theme = ExtResource("2_4k8jc")
+text = "Exit"
+
+[node name="GameOverText" type="Label" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -294.0
+offset_top = 44.46
+offset_right = 295.0
+offset_bottom = 173.46
+grow_horizontal = 2
+theme = ExtResource("2_4k8jc")
+theme_type_variation = &"HeaderLarge"
+text = "Game over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Vignette" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.376471)
 self_modulate = Color(1, 1, 1, 0.686275)
@@ -120,3 +181,4 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_r606n")
+metadata/_edit_lock_ = true

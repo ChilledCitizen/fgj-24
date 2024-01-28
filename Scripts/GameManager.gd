@@ -27,6 +27,8 @@ func _ready():
 	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
 	Player.state_changed.connect(_player_state_changed)
+	UI.retry_pressed.connect(_retry_pressed)
+	UI.exit_pressed.connect(_exit_pressed)
 	
 	music = get_node("MainMusic")
 	death_jingle = get_node("DeathJingle")
@@ -79,7 +81,13 @@ func spawnRandomEnemy():
 		enemies.append(newEnemy)
 		
 func _player_state_changed(state):
-	UI.UpdateFace(state)
+	UI.UpdateState(state)
 	if state == Player.PlayerState.DEAD:
 		music.stop()
 		death_jingle.play()
+		
+func _exit_pressed():
+	_on_player_killed()
+	
+func _retry_pressed():
+	get_tree().reload_current_scene()

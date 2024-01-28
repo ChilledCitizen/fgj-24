@@ -122,6 +122,12 @@ func ApplyDamage(amount :int):
 		player_state = PlayerState.DEAD
 		sprite.play(get_animation_name("idle"))
 		state_changed.emit(player_state)
+		
+		if isTickling:
+			isTickling = false
+			tickleInstance.queue_free()
+			tickle_sound.stop()
+			tickle_sound.seek(0)
 	
 
 func tickle():
@@ -155,6 +161,9 @@ func play_random_step_sound():
 	step_sounds[index].play()
 
 func _input(event):
+	if player_state == PlayerState.DEAD:
+		return
+	
 	if event.is_action_pressed("tickle"):
 		tickle()
 	if event.is_action("joke") && jokeCooldown == 0 && !isTickling:
