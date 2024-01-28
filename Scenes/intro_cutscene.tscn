@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ctb778c2bol40"]
 
-[ext_resource type="Script" path="res://Scenes/intro_cutscene.gd" id="1_ayc2e"]
+[ext_resource type="Script" path="res://Scripts/intro_cutscene.gd" id="1_ayc2e"]
 [ext_resource type="Texture2D" uid="uid://5bqbatjx681r" path="res://2d/minnie_idle_1.png" id="1_rk053"]
 [ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="2_3bwk2"]
 [ext_resource type="Texture2D" uid="uid://cgbcputj0ults" path="res://2d/UI_filter.png" id="2_4u0e6"]
@@ -17,13 +17,13 @@ corner_radius_bottom_left = 20
 [node name="IntroCutscene" type="Node2D"]
 script = ExtResource("1_ayc2e")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(3, -139)
-scale = Vector2(10.7188, 10.7188)
+position = Vector2(0, -119)
+scale = Vector2(6.7422, 6.7422)
 texture = ExtResource("1_rk053")
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -71,24 +71,27 @@ autowrap_mode = 3
 visible_characters = 0
 
 [node name="Nametag" type="Label" parent="CanvasLayer/TextBoxContainer/TextBox"]
-layout_mode = 0
-offset_top = -64.0
-offset_right = 197.0
-offset_bottom = 1.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.172
+offset_left = 7.0
+offset_top = -39.0
+offset_right = 6.54399
+offset_bottom = 5.0
 text = "Minnie"
 
 [node name="Instructions" type="Label" parent="CanvasLayer/TextBoxContainer/TextBox"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.76
+anchor_left = 0.68
 anchor_right = 1.0
-offset_left = 0.519958
-offset_top = -37.0
-offset_right = -11.0
-offset_bottom = -4.0
+offset_left = 0.359985
+offset_top = -29.0
+offset_right = 2.0
+offset_bottom = 4.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 30
-text = "Click for next line"
+theme_override_font_sizes/font_size = 25
+text = "Click for next line, Esc to skip"
 
 [node name="BG" type="Control" parent="CanvasLayer"]
 layout_mode = 3
