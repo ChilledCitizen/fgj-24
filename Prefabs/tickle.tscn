@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://vo6cridhxlsd"]
+[gd_scene load_steps=6 format=3 uid="uid://vo6cridhxlsd"]
 
 [ext_resource type="Script" path="res://Scripts/tickle.gd" id="1_yp42k"]
 [ext_resource type="Texture2D" uid="uid://bqox14sck1761" path="res://2d/hands_1.png" id="2_rdtia"]
+[ext_resource type="Texture2D" uid="uid://co4larc5wxjbu" path="res://2d/hands_2.png" id="3_o3ag2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_niqhr"]
 radius = 56.4
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ghtka"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rdtia")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o3ag2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Tickle" type="Area2D" groups=["player_attack", "tickle"]]
 script = ExtResource("1_yp42k")
@@ -12,7 +27,10 @@ script = ExtResource("1_yp42k")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_niqhr")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2.83, 2.83)
-texture = ExtResource("2_rdtia")
+sprite_frames = SubResource("SpriteFrames_ghtka")
+autoplay = "default"
+frame = 1
+frame_progress = 0.704404

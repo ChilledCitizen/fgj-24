@@ -15,6 +15,9 @@ var laughteredNumber
 var spawnTimer : int = 0
 @onready var rand : RandomNumberGenerator = RandomNumberGenerator.new()
 
+var music : AudioStreamPlayer
+var death_jingle : AudioStreamPlayer
+
 func _ready():
 	randomize()
 	EnemySpwanRate = EnemySpwanRate*60
@@ -24,6 +27,9 @@ func _ready():
 	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
 	Player.state_changed.connect(_player_state_changed)
+	
+	music = get_node("MainMusic")
+	death_jingle = get_node("DeathJingle")
 	
 	for i in StartEnemyAmount:
 		spawnRandomEnemy()
@@ -74,4 +80,6 @@ func spawnRandomEnemy():
 		
 func _player_state_changed(state):
 	UI.UpdateFace(state)
-	pass
+	if state == Player.PlayerState.DEAD:
+		music.stop()
+		death_jingle.play()
