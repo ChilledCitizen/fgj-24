@@ -1,6 +1,14 @@
 extends Control
+class_name UI
+
+
+signal exit_pressed
+signal retry_pressed
+
 
 @export var rect : TextureRect
+@export var gameOver : Control
+@export var gameOver_buttons : Array[Button]
 
 enum PlayerState {
 	HAPPY,
@@ -12,8 +20,19 @@ enum PlayerState {
 
 @export var faces : Array[Texture2D]
 
+func _ready():
+	gameOver.visible = false
+	for button in gameOver_buttons:
+		match button.name:
+			"Retry":
+				button.pressed.connect(_on_retry_pressed)
+			"Exit":
+				button.pressed.connect(_on_exit_pressed)
+		button.disabled = true
+	
 
-func UpdateFace(state):
+
+func UpdateState(state):
 	var face = faces[0]
 	match state:
 		PlayerState.HAPPY:
@@ -27,6 +46,15 @@ func UpdateFace(state):
 			pass
 		PlayerState.DEAD:
 			face = faces[3]
+			for button in gameOver_buttons:
+				button.disabled = false
+			gameOver.visible = true
 			pass
 	
 	rect.texture = face
+	
+func _on_retry_pressed():
+	retry_pressed.emit()
+
+func _on_exit_pressed():
+	exit_pressed.emit()
