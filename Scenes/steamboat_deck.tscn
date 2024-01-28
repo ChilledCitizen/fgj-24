@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=13 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ejwid"]
+[ext_resource type="PackedScene" uid="uid://rsxj421o0t21" path="res://Prefabs/enemy_goat.tscn" id="3_vvgea"]
+[ext_resource type="PackedScene" uid="uid://10pxmlctvvhs" path="res://Prefabs/enemy_duck.tscn" id="4_6rms1"]
 [ext_resource type="PackedScene" uid="uid://dg7nnj4kcdjpi" path="res://Prefabs/player.tscn" id="4_h4y8v"]
 [ext_resource type="PackedScene" uid="uid://vo6cridhxlsd" path="res://Prefabs/tickle.tscn" id="6_uepah"]
 [ext_resource type="PackedScene" uid="uid://5j6dajqq1t7d" path="res://Prefabs/enemy_pete.tscn" id="6_y70qp"]
@@ -15,7 +17,7 @@
 script = ExtResource("1_ejwid")
 UI = NodePath("CanvasLayer/UI")
 Player = NodePath("Player")
-EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp")])
+EnemyTypes = Array[PackedScene]([ExtResource("6_y70qp"), ExtResource("3_vvgea"), ExtResource("4_6rms1")])
 StartEnemyAmount = 0
 EnemySpwanRate = 1.0
 MaxEnemies = 10

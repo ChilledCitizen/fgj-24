@@ -28,6 +28,9 @@ var hit_particles : GPUParticles2D
 var death_timer : Timer
 var death_delay : float = 1.0
 
+var flash_timer : Timer
+var flash_max_duration : float = 1.0
+
 var damage_flash_count : int = 8
 var flashes_left : int = 8
 var flashing : bool = false
@@ -39,6 +42,45 @@ func init_step_sounds():
 	sprite = get_node("Sprite2D")
 	for sound in step_sound_parent.get_children():
 		step_sounds.append(sound)
+		
+func init_flash_timer():
+	flash_timer = Timer.new()
+	flash_timer.one_shot = true
+	add_child(flash_timer)
+	flash_timer.connect("timeout", self.on_flash_end)
+
+func on_flash_end():
+	if !sprite:
+		return
+		
+	if sprite.visible:
+		return
+		
+	sprite.visible = true
+
+func get_enemy_health():
+	if is_in_group("pete"):
+		return 200
+	
+	if is_in_group("goat"):
+		return 100
+		
+	if is_in_group("duck"):
+		return 50
+
+	return health
+	
+func get_enemy_speed():
+	if is_in_group("pete"):
+		return 80
+	
+	if is_in_group("goat"):
+		return 150
+		
+	if is_in_group("duck"):
+		return 300
+		
+	return base_speed
 
 func _ready():
 	randomize()
@@ -48,16 +90,26 @@ func _ready():
 	area_exited.connect(_on_body_exited)
 	body_exited.connect(_on_body_exited)
 	rand = RandomNumberGenerator.new()
-	speed = rand.randi_range(base_speed/2, base_speed*2)
+	health = get_enemy_health()
+	base_speed = get_enemy_speed()
+	speed = base_speed # rand.randi_range(base_speed/2, base_speed*2)
 	init_step_sounds()
 	player.state_changed.connect(_on_player_dead)
 	laugh_sound = get_node("LaughSound")
 	hit_particles = get_node("HitParticles")
 	init_death_timer()
+	init_flash_timer()
 	
 func _physics_process(delta):
 	if !tickling && !hit && !wander && health > 0:
-		global_position += global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10))) * speed * delta 
+		var direction : Vector2 = global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10)))
+		global_position += direction * speed * delta
+		if direction.x < 0 and transform.x.x > 0:
+			transform.x *= -1
+
+		if direction.x > 0 and transform.x.x < 0:
+			transform.x *= -1
+
 	elif tickling:
 		ApplyDamage(tickleDamage)
 	elif wander:
@@ -70,6 +122,9 @@ func _process(delta):
 	
 	if flashes_left == 0:
 		flashing = false
+		
+	if !flashing and !sprite.visible:
+		sprite.visible = true
 		
 	if !wander and (last_player_state == Player.PlayerState.DEAD or last_player_state == Player.PlayerState.DROWN):
 		wander = true
@@ -90,6 +145,7 @@ func ApplyDamage(damage : int):
 	hit_particles.emitting = true
 	flashes_left = damage_flash_count
 	flashing = true
+	flash_timer.start(flash_max_duration)
 	if health <= 0:
 		flashing = false
 		sprite.visible = true
@@ -100,8 +156,10 @@ func ApplyDamage(damage : int):
 		death_timer.start()
 
 func play_random_step_sound():
+	if !sprite:
+		return
+
 	if sprite.animation != "walk":
-		print("wrong anim")
 		return
 
 	if sprite.frame != 0:
@@ -110,7 +168,6 @@ func play_random_step_sound():
 	var index = randi_range(0, len(step_sounds) - 1)
 
 	if index >= len(step_sounds):
-		print("index")
 		return
 
 	step_sounds[index].play()

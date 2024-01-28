@@ -78,7 +78,8 @@ func updateLaughtered():
 	laughtered += 1
 	laughteredNumber.text = str(laughtered)
 	print_debug("update laughtered")
-	
+
+
 func spawnRandomEnemy():
 	if !should_spawn_enemy:
 		return
