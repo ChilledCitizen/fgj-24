@@ -20,6 +20,15 @@ var step_sound_parent : Node
 var step_sounds : Array[AudioStreamPlayer2D]
 var sprite : AnimatedSprite2D
 var can_make_sound : bool = false
+var laugh_sound : AudioStreamPlayer2D
+var hit_particles : GPUParticles2D
+
+var death_timer : Timer
+var death_delay : float = 1.0
+
+var damage_flash_count : int = 8
+var flashes_left : int = 8
+var flashing : bool = false
 
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
@@ -38,19 +47,49 @@ func _ready():
 	speed = rand.randi_range(base_speed/2, base_speed*2)
 	init_step_sounds()
 	player.state_changed.connect(_on_player_dead)
+	laugh_sound = get_node("LaughSound")
+	hit_particles = get_node("HitParticles")
+	init_death_timer()
 	
 func _physics_process(delta):
-	if !tickling && !hit && !wander:
+	if !tickling && !hit && !wander && health > 0:
 		global_position += global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10))) * speed * delta 
 	elif tickling:
 		ApplyDamage(tickleDamage)
 	elif wander:
 		global_position += (global_position - player.global_position).normalized() * speed*2 * delta
+		
+func _process(delta):
+	if Engine.get_physics_frames() % 8 == 0 and flashing:
+		sprite.visible = !sprite.visible
+		flashes_left -= 1
+	
+	if flashes_left == 0:
+		flashing = false
+
+func init_death_timer():
+	death_timer = Timer.new()
+	death_timer.wait_time = death_delay
+	death_timer.one_shot = true
+	add_child(death_timer)
+	death_timer.connect("timeout", self.on_timer_end)
+
+func on_timer_end():
+	queue_free()
 
 func ApplyDamage(damage : int):
 	health -= damage
+	hit_particles.emitting = true
+	flashes_left = damage_flash_count
+	flashing = true
 	if health <= 0:
-		queue_free()
+		flashing = false
+		sprite.visible = true
+		collision_shape_2d.disabled = true
+		sprite.play("laugh")
+		if laugh_sound:
+			laugh_sound.play()
+		death_timer.start()
 		
 func play_random_step_sound():
 	if sprite.animation != "walk":

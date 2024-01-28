@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5j6dajqq1t7d"]
+[gd_scene load_steps=20 format=3 uid="uid://5j6dajqq1t7d"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_fy07b"]
 [ext_resource type="Texture2D" uid="uid://dv4ys8w4odhdx" path="res://2d/pete_laugh_1.png" id="2_3kobl"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://bh871qogf4j2d" path="res://Sound/pete_stomp_3.wav" id="8_hga0x"]
 [ext_resource type="AudioStream" uid="uid://bh2bogovrism5" path="res://Sound/pete_stomp_4.wav" id="9_lo2lq"]
 [ext_resource type="AudioStream" uid="uid://or44lbv2u1ai" path="res://Sound/pete_stomp_5.wav" id="10_uvic0"]
+[ext_resource type="AudioStream" uid="uid://bomuhycjcwq3u" path="res://Sound/pete_laugh_1.wav" id="11_gle6d"]
+[ext_resource type="Texture2D" uid="uid://cx11y3kgmarmf" path="res://2d/laugh_particle_sheet_1.png" id="12_dphpk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
@@ -39,6 +41,43 @@ animations = [{
 "name": &"walk",
 "speed": 5.0
 }]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ivlqk"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_x40bm"]
+_data = [Vector2(0, 0.845418), 0.0, 0.0, 0, 0, Vector2(1, 0.212007), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iics3"]
+curve = SubResource("Curve_x40bm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kvd1a"]
+lifetime_randomness = 0.27
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 78.22
+angle_min = -14.2
+angle_max = 14.1
+spread = 108.529
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -76.49
+linear_accel_max = 92.65
+radial_accel_min = -69.87
+radial_accel_max = 69.84
+tangential_accel_min = -59.74
+tangential_accel_max = 67.7
+scale_max = 2.0
+scale_over_velocity_max = 1.0
+alpha_curve = SubResource("CurveTexture_iics3")
+anim_offset_max = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_2vgmt"]
+diffuse_texture = ExtResource("12_dphpk")
+texture_filter = 1
 
 [node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_fy07b")
@@ -82,5 +121,20 @@ bus = &"SFX"
 stream = ExtResource("10_uvic0")
 volume_db = 8.0
 bus = &"SFX"
+
+[node name="LaughSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_gle6d")
+volume_db = -1.381
+bus = &"SFX"
+
+[node name="HitParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_ivlqk")
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_kvd1a")
+texture = SubResource("CanvasTexture_2vgmt")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.69
+randomness = 0.29
 
 [connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]
