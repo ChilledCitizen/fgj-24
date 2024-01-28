@@ -25,6 +25,7 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="MainMenuContainer" type="VBoxContainer" parent="CenterContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -115,7 +116,6 @@ layout_mode = 2
 text = "Back"
 
 [node name="CreditsContainer" type="VBoxContainer" parent="CenterContainer"]
-visible = false
 layout_mode = 2
 
 [node name="CreditsTitle" type="Label" parent="CenterContainer/CreditsContainer"]
@@ -125,12 +125,79 @@ theme_type_variation = &"Header"
 text = "Credits"
 horizontal_alignment = 1
 
-[node name="CreditsListContainer" type="VBoxContainer" parent="CenterContainer/CreditsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/CreditsContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/CreditsContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/CreditsContainer/CreditsListContainer"]
+[node name="Label" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Tehtii ite :)"
+text = "Casimir Kuusela"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "------------------"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Programming"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game Design"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Project Managment"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Space" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer"]
+layout_mode = 2
+text = "             "
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/CreditsContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Jerry Salonen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "------------------"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Art"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Music & Sound"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CenterContainer/CreditsContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Additional Programming"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Back" type="Button" parent="CenterContainer/CreditsContainer"]
 layout_mode = 2
