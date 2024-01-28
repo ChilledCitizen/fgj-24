@@ -164,6 +164,7 @@ current = true
 
 [node name="Tickle" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_ahbdk")
+volume_db = -4.602
 bus = &"SFX"
 
 [node name="Joke" type="AudioStreamPlayer2D" parent="."]
