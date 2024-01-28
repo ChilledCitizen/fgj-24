@@ -3,16 +3,17 @@ class_name Enemy
 
 @export var base_speed : float = 100
 @export var health : int = 100
-@export var damage : int = 20
+@export var damage : int = 5
 @onready var collision_shape_2d = %CollisionShape2D
-var player
-var inEnemy : bool = false
+var player : Player
+#var inEnemy : bool = false
 var neighbour : Enemy
 var speed
 var rand
 var tickling : bool = false
 var hit : bool = false
 var tickleDamage = 0
+var wander : bool = false
 #var rngVector : Vector2 = Vector2(-100, 100)
 
 var step_sound_parent : Node
@@ -36,12 +37,15 @@ func _ready():
 	rand = RandomNumberGenerator.new()
 	speed = rand.randi_range(base_speed/2, base_speed*2)
 	init_step_sounds()
+	player.state_changed.connect(_on_player_dead)
 	
 func _physics_process(delta):
-	if !tickling && !hit:
+	if !tickling && !hit && !wander:
 		global_position += global_position.direction_to(player.global_position+Vector2(rand.randi_range(-10,10), rand.randi_range(-10,10))) * speed * delta 
 	elif tickling:
 		ApplyDamage(tickleDamage)
+	elif wander:
+		global_position += (global_position - player.global_position).normalized() * speed*2 * delta
 
 func ApplyDamage(damage : int):
 	health -= damage
@@ -69,8 +73,9 @@ func on_body_entered(body :Node2D):
 		var player : Player = body
 		player.ApplyDamage(damage)
 	elif body.is_in_group("enemy"):
-		inEnemy = true
-		neighbour = body
+		pass
+		#inEnemy = true
+		#neighbour = body
 	elif body.is_in_group("player_attack"):
 		if body.is_in_group("tickle"):
 			if body.hasTarget == false:
@@ -80,11 +85,15 @@ func on_body_entered(body :Node2D):
 			hit = true
 
 func _on_body_exited(body :Node2D):
-	inEnemy = false
-	neighbour = null
+	#inEnemy = false
+	#neighbour = null
 	if body.is_in_group("player_attack"):
 		tickling = false
 		hit = false
 
 func _on_sprite_2d_frame_changed():
 	play_random_step_sound()
+		
+func _on_player_dead(state):
+	if state == Player.PlayerState.DEAD:
+		wander = true

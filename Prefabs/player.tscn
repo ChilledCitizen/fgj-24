@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://dg7nnj4kcdjpi"]
+[gd_scene load_steps=25 format=3 uid="uid://dg7nnj4kcdjpi"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_k6fkh"]
+[ext_resource type="Texture2D" uid="uid://b7ehco6ka7unk" path="res://2d/mickey_dead_1.png" id="2_4vwie"]
 [ext_resource type="Texture2D" uid="uid://dtd4ohc31eqb1" path="res://2d/mickey_dread_idle_1.png" id="2_akm1v"]
 [ext_resource type="Texture2D" uid="uid://btfb77ehqxyyq" path="res://2d/mickey_happy_idle_1.png" id="2_we8hp"]
 [ext_resource type="Texture2D" uid="uid://dfohr36vd8dxa" path="res://2d/mickey_dread_walk_1.png" id="3_f8yj6"]
@@ -28,6 +29,14 @@ height = 162.01
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pesrj"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4vwie")
+}],
+"loop": true,
+"name": &"dead_idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_akm1v")

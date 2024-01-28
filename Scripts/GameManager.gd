@@ -17,11 +17,13 @@ var spawnTimer : int = 0
 
 func _ready():
 	randomize()
+	EnemySpwanRate = EnemySpwanRate*60
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
 	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
 	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
+	Player.state_changed.connect(_player_state_changed)
 	
 	for i in StartEnemyAmount:
 		spawnRandomEnemy()
@@ -36,8 +38,9 @@ func _ready():
 	
 	
 func _physics_process(delta):
-	if spawnTimer >= EnemySpwanRate*60:
+	if spawnTimer >= EnemySpwanRate && len(enemies) < MaxEnemies:
 		spawnRandomEnemy()
+		print_debug("added enemy in update")
 		spawnTimer = 0
 	else:
 		spawnTimer+=1	
@@ -45,8 +48,8 @@ func _physics_process(delta):
 	CheckPlayerOverboard()
 
 func CheckPlayerOverboard():
-	if Player.global_position > Deck.floorArea:
-		get_tree().change_scene_to_packed(MainMenu)
+	if abs(Player.global_position.x) > Deck.floorArea.x/2 + Player.spriteSize.x|| abs(Player.global_position.y) > Deck.floorArea.y/2 + Player.spriteSize.y:
+		_on_player_killed()
 
 func _on_enemy_slain():
 	updateLaughtered()
@@ -66,5 +69,9 @@ func spawnRandomEnemy():
 		var newEnemy : Enemy = EnemyTypes[r].instantiate()
 		add_child(newEnemy)
 		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+800), rand.randi_range(Player.global_position.y+200,Player.global_position.y+800))
+		newEnemy.tree_exited.connect(_on_enemy_slain)
 		enemies.append(newEnemy)
 		
+func _player_state_changed(state):
+	UI.UpdateFace(state)
+	pass
