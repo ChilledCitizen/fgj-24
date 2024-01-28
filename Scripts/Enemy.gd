@@ -1,6 +1,8 @@
 extends Area2D
 class_name Enemy
 
+signal laughed
+
 @export var base_speed : float = 100
 @export var health : int = 100
 @export var damage : int = 5
@@ -80,6 +82,7 @@ func init_death_timer():
 	death_timer.connect("timeout", self.on_timer_end)
 
 func on_timer_end():
+	laughed.emit()
 	queue_free()
 
 func ApplyDamage(damage : int):
@@ -95,7 +98,7 @@ func ApplyDamage(damage : int):
 		if laugh_sound:
 			laugh_sound.play()
 		death_timer.start()
-		
+
 func play_random_step_sound():
 	if sprite.animation != "walk":
 		print("wrong anim")
