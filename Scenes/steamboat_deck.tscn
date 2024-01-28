@@ -32,6 +32,7 @@ script = ExtResource("1_dqxwu")
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("4_h4y8v")]
+unique_name_in_owner = true
 jokeProjectile = ExtResource("7_hspfm")
 tickleArea = ExtResource("6_uepah")
 

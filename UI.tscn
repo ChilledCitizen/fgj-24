@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dtd4ohc31eqb1" path="res://2d/mickey_dread_idle_1.png" id="4_10ytm"]
 [ext_resource type="Texture2D" uid="uid://b7ehco6ka7unk" path="res://2d/mickey_dead_1.png" id="5_dgy6c"]
 
-[node name="UI" type="Control" node_paths=PackedStringArray("rect", "gameOver", "gameOver_buttons", "pause", "pause_buttons")]
+[node name="UI" type="Control" node_paths=PackedStringArray("rect", "gameOver", "gameOver_buttons", "pause", "pause_buttons", "score", "highScore")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -22,6 +22,8 @@ gameOver = NodePath("GameOver")
 gameOver_buttons = [NodePath("GameOver/Buttons/Retry"), NodePath("GameOver/Buttons/Exit")]
 pause = NodePath("Pause")
 pause_buttons = [NodePath("Pause/Buttons/Continue"), NodePath("Pause/Buttons/Exit")]
+score = NodePath("GameOver/ScoreContainer/ScoreNumber")
+highScore = NodePath("GameOver/HighscoreContainer/HighscoreNumber")
 faces = Array[Texture2D]([ExtResource("1_vqqwp"), ExtResource("3_w474r"), ExtResource("4_10ytm"), ExtResource("5_dgy6c")])
 
 [node name="MickeyFace" type="Control" parent="."]
@@ -114,7 +116,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="GameOver" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -171,8 +172,80 @@ theme_type_variation = &"HeaderLarge"
 text = "Game over"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ScoreContainer" type="HBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -334.0
+offset_top = 168.0
+offset_right = -42.0
+offset_bottom = 256.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Score" type="Label" parent="GameOver/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("2_4k8jc")
+theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 82
+text = "Score:"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ScoreNumber" type="Label" parent="GameOver/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_4k8jc")
+theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 82
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="HighscoreContainer" type="HBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 30.0
+offset_top = 171.0
+offset_right = 486.0
+offset_bottom = 259.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Highscore" type="Label" parent="GameOver/HighscoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_4k8jc")
+theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 82
+text = "Highscore:"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="HighscoreNumber" type="Label" parent="GameOver/HighscoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_4k8jc")
+theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 82
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="Pause" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

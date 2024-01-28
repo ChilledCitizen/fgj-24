@@ -13,6 +13,8 @@ signal continue_pressed
 @export var gameOver_buttons : Array[Button]
 @export var pause : Control
 @export var pause_buttons : Array[Button]
+@export var score : Label
+@export var highScore :Label
 
 enum PlayerState {
 	HAPPY,
@@ -88,3 +90,8 @@ func _on_exit_pressed():
 func _on_continue_pressed():
 	pause.visible = false
 	continue_pressed.emit()
+
+func SetEndScores(newScore :int):
+	score.text = str(newScore)
+	highScore.text = HighscoreManager.GetHighScoreAsString()
+	

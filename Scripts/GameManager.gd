@@ -28,7 +28,6 @@ func _ready():
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
 	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
-	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
 	Player.state_changed.connect(_player_state_changed)
 	UI.retry_pressed.connect(_retry_pressed)
@@ -62,13 +61,17 @@ func _physics_process(delta):
 
 func CheckPlayerOverboard():
 	if abs(Player.global_position.x) > Deck.floorArea.x/2 + Player.spriteSize.x|| abs(Player.global_position.y) > Deck.floorArea.y/2 + Player.spriteSize.y:
-		_on_player_killed()
+		_on_player_overboard()
 
 func _on_enemy_slain():
 	updateLaughtered()
 	enemies.pop_front()
 
 func _on_player_killed():
+	#player_drown.emit()
+	pass
+
+func _on_player_overboard():
 	player_drown.emit()
 
 func updateLaughtered():
@@ -94,11 +97,15 @@ func _player_state_changed(state):
 		should_spawn_enemy = false
 		music.stop()
 		death_jingle.play()
-		
+		HighscoreManager.SetHighscore(laughtered)
+		UI.SetEndScores(laughtered)
+	
+	UI.UpdateState(state)
+
 func _exit_pressed():
 	if get_tree().paused:
 		get_tree().paused = false
-	_on_player_killed()
+	get_tree().change_scene_to_packed(MainMenu)
 	
 func _retry_pressed():
 	get_tree().reload_current_scene()

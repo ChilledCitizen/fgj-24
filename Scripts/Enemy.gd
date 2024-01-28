@@ -40,7 +40,7 @@ func init_step_sounds():
 
 func _ready():
 	randomize()
-	player = get_tree().root.get_child(0).get_node("Player")
+	player = get_tree().root.get_child(1).get_node("Player")
 	body_entered.connect(on_body_entered)
 	area_entered.connect(on_body_entered)
 	area_exited.connect(_on_body_exited)
