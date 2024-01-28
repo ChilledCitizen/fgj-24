@@ -1,16 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://rsxj421o0t21"]
+[gd_scene load_steps=19 format=3 uid="uid://rsxj421o0t21"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_ieni3"]
 [ext_resource type="Texture2D" uid="uid://b0is07dqnk2bv" path="res://2d/goat_laugh_1.png" id="2_d5nbk"]
 [ext_resource type="Texture2D" uid="uid://bhu3iwfemos3p" path="res://2d/goat_walk_1.png" id="2_w4mip"]
 [ext_resource type="Texture2D" uid="uid://d22xew7wc1fob" path="res://2d/goat_laugh_2.png" id="3_3pscb"]
 [ext_resource type="Texture2D" uid="uid://bgrq12mx84jko" path="res://2d/goat_walk_2.png" id="3_xt4gi"]
-[ext_resource type="AudioStream" uid="uid://bomuhycjcwq3u" path="res://Sound/pete_laugh_1.wav" id="6_mh5t1"]
+[ext_resource type="AudioStream" uid="uid://cdgjmojqrvdoj" path="res://Sound/goat_laugh.wav" id="6_r636i"]
 [ext_resource type="Texture2D" uid="uid://cx11y3kgmarmf" path="res://2d/laugh_particle_sheet_1.png" id="7_bjufb"]
+[ext_resource type="AudioStream" uid="uid://dmifxfti1s5v" path="res://Sound/goat_step_1.wav" id="8_vsr5b"]
+[ext_resource type="AudioStream" uid="uid://8eqalfrbdswp" path="res://Sound/goat_step_2.wav" id="9_enedk"]
+[ext_resource type="AudioStream" uid="uid://bw82cm6nyhs4c" path="res://Sound/goat_step_3.wav" id="10_mkq5a"]
+[ext_resource type="AudioStream" uid="uid://bdjs4xxpam50u" path="res://Sound/goat_step_4.wav" id="11_al563"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
-radius = 54.85
-height = 162.02
+radius = 53.0
+height = 114.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_grch7"]
 animations = [{
@@ -74,7 +78,7 @@ anim_offset_max = 1.0
 diffuse_texture = ExtResource("7_bjufb")
 texture_filter = 1
 
-[node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
+[node name="Enemy_Pete" type="Area2D" groups=["enemy", "goat"]]
 script = ExtResource("1_ieni3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -93,8 +97,9 @@ frame_progress = 0.337562
 metadata/_edit_lock_ = true
 
 [node name="LaughSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_mh5t1")
-volume_db = -1.381
+stream = ExtResource("6_r636i")
+volume_db = 4.0
+panning_strength = 0.86
 bus = &"SFX"
 
 [node name="HitParticles" type="GPUParticles2D" parent="."]
@@ -106,3 +111,27 @@ lifetime = 0.6
 one_shot = true
 explosiveness = 0.69
 randomness = 0.29
+
+[node name="StepSounds" type="Node2D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("8_vsr5b")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("9_enedk")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("10_mkq5a")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Step4" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("11_al563")
+volume_db = 8.0
+bus = &"SFX"
+
+[connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]

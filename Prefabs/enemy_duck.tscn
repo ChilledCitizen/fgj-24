@@ -1,16 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://10pxmlctvvhs"]
+[gd_scene load_steps=19 format=3 uid="uid://10pxmlctvvhs"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_8c1ig"]
 [ext_resource type="Texture2D" uid="uid://bxt2cetfdcg24" path="res://2d/duck_laugh_1.png" id="2_jvifa"]
 [ext_resource type="Texture2D" uid="uid://bw5uiahgm5np1" path="res://2d/duck_laugh_2.png" id="3_rk5dv"]
 [ext_resource type="Texture2D" uid="uid://bxtfebrx5dic1" path="res://2d/duck_walk_1.png" id="4_enp5e"]
 [ext_resource type="Texture2D" uid="uid://c2px4welvfojr" path="res://2d/duck_walk_2.png" id="5_b6ncp"]
-[ext_resource type="AudioStream" uid="uid://bomuhycjcwq3u" path="res://Sound/pete_laugh_1.wav" id="6_lqbje"]
+[ext_resource type="AudioStream" uid="uid://cws6en0cpffol" path="res://Sound/chicken_laugh.wav" id="6_h1ujw"]
 [ext_resource type="Texture2D" uid="uid://cx11y3kgmarmf" path="res://2d/laugh_particle_sheet_1.png" id="7_lrsvd"]
+[ext_resource type="AudioStream" uid="uid://bxntmy0hbk1vd" path="res://Sound/chicken_step_1.wav" id="8_x0cb6"]
+[ext_resource type="AudioStream" uid="uid://mon470ok1ew6" path="res://Sound/chicken_step_2.wav" id="9_vsa8c"]
+[ext_resource type="AudioStream" uid="uid://di17g7j7sxr2r" path="res://Sound/chicken_step_3.wav" id="10_1nrwq"]
+[ext_resource type="AudioStream" uid="uid://b08q1kktoyy0c" path="res://Sound/chicken_step_4.wav" id="11_66bya"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
-height = 162.02
+height = 112.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_grch7"]
 animations = [{
@@ -74,7 +78,7 @@ anim_offset_max = 1.0
 diffuse_texture = ExtResource("7_lrsvd")
 texture_filter = 1
 
-[node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
+[node name="Enemy_Pete" type="Area2D" groups=["duck", "enemy"]]
 script = ExtResource("1_8c1ig")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -88,12 +92,12 @@ scale = Vector2(2.325, 2.325)
 sprite_frames = SubResource("SpriteFrames_grch7")
 animation = &"laugh"
 autoplay = "walk"
-frame_progress = 0.307553
+frame_progress = 0.679462
 metadata/_edit_lock_ = true
 
 [node name="LaughSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_lqbje")
-volume_db = -1.381
+stream = ExtResource("6_h1ujw")
+volume_db = 4.0
 bus = &"SFX"
 
 [node name="HitParticles" type="GPUParticles2D" parent="."]
@@ -105,3 +109,27 @@ lifetime = 0.6
 one_shot = true
 explosiveness = 0.69
 randomness = 0.29
+
+[node name="StepSounds" type="Node2D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("8_x0cb6")
+volume_db = 6.0
+bus = &"SFX"
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("9_vsa8c")
+volume_db = 6.0
+bus = &"SFX"
+
+[node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("10_1nrwq")
+volume_db = 6.0
+bus = &"SFX"
+
+[node name="Step4" type="AudioStreamPlayer2D" parent="StepSounds"]
+stream = ExtResource("11_66bya")
+volume_db = 6.0
+bus = &"SFX"
+
+[connection signal="frame_changed" from="Sprite2D" to="." method="_on_sprite_2d_frame_changed"]

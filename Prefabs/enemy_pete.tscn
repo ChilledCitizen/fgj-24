@@ -15,7 +15,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cefm"]
 radius = 54.85
-height = 162.02
+height = 138.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_grch7"]
 animations = [{
@@ -79,7 +79,7 @@ anim_offset_max = 1.0
 diffuse_texture = ExtResource("12_dphpk")
 texture_filter = 1
 
-[node name="Enemy_Pete2" type="Area2D" groups=["enemy"]]
+[node name="Enemy_Pete2" type="Area2D" groups=["enemy", "pete"]]
 script = ExtResource("1_fy07b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -99,32 +99,32 @@ metadata/_edit_lock_ = true
 
 [node name="Step1" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("6_1f1ri")
-volume_db = 8.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="Step2" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("7_3h65c")
-volume_db = 8.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="Step3" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("8_hga0x")
-volume_db = 8.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="Step4" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("9_lo2lq")
-volume_db = 8.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="Step5" type="AudioStreamPlayer2D" parent="StepSounds"]
 stream = ExtResource("10_uvic0")
-volume_db = 8.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="LaughSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_gle6d")
-volume_db = -1.381
+volume_db = 8.0
 bus = &"SFX"
 
 [node name="HitParticles" type="GPUParticles2D" parent="."]
