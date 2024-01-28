@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 signal state_changed(state)
+signal tickle_stopped
 
 @export var speed : float = 400
 @export var tickleDist : float = 100
@@ -13,7 +14,7 @@ signal state_changed(state)
 var jokeCooldown : float = 0
 var tickleCooldown : float = 0
 var isTickling : bool = false
-var tickleInstance
+var tickleInstance : Tickle
 var sprite : AnimatedSprite2D
 var step_sound_parent : Node
 var step_sounds : Array[AudioStreamPlayer2D]
@@ -136,6 +137,8 @@ func ApplyDamage(amount :int):
 func tickle():
 	isTickling = true
 	tickleInstance = tickleArea.instantiate()
+	tickleInstance.player = self
+	tickleInstance.stopping.connect(_on_tickleInstance_destroyed)
 	add_child(tickleInstance)
 	tickleInstance.global_position = global_position+(Vector2(tickleDist, tickleDist)*(get_global_mouse_position() - global_position).normalized())
 	tickle_sound.play()
@@ -172,9 +175,9 @@ func _input(event):
 	if event.is_action("joke") && jokeCooldown == 0 && !isTickling:
 		print_debug("joked")
 		joke()
-	elif event.is_action_released("tickle"):
+	elif event.is_action_released("tickle") && tickleInstance:
 		isTickling = false
-		tickleInstance.queue_free()
+		tickle_stopped.emit()
 		tickle_sound.stop()
 		tickle_sound.seek(0)
 
@@ -189,3 +192,6 @@ func _on_scene_parent_player_drown():
 	state_changed.emit(PlayerState.DROWN)
 	player_state = PlayerState.DROWN
 	sprite.play(get_animation_name("idle"))
+
+func _on_tickleInstance_destroyed():
+	isTickling = false
