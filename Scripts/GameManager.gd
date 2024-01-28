@@ -18,6 +18,10 @@ var spawnTimer : int = 0
 var music : AudioStreamPlayer
 var death_jingle : AudioStreamPlayer
 
+var should_spawn_enemy : bool = true
+
+signal player_drown
+
 func _ready():
 	randomize()
 	EnemySpwanRate = EnemySpwanRate*60
@@ -64,7 +68,7 @@ func _on_enemy_slain():
 	enemies.pop_front()
 
 func _on_player_killed():
-	get_tree().change_scene_to_packed(MainMenu)
+	player_drown.emit()
 
 func updateLaughtered():
 	laughtered += 1
@@ -72,6 +76,9 @@ func updateLaughtered():
 	print_debug("update laughtered")
 	
 func spawnRandomEnemy():
+	if !should_spawn_enemy:
+		return
+
 	if enemies.size() < MaxEnemies:
 		var r = rand.randi_range(0, EnemyTypes.size()-1)
 		var newEnemy : Enemy = EnemyTypes[r].instantiate()
@@ -82,7 +89,8 @@ func spawnRandomEnemy():
 		
 func _player_state_changed(state):
 	UI.UpdateState(state)
-	if state == Player.PlayerState.DEAD:
+	if state == Player.PlayerState.DEAD or state == Player.PlayerState.DROWN:
+		should_spawn_enemy = false
 		music.stop()
 		death_jingle.play()
 		

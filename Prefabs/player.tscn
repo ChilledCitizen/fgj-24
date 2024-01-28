@@ -70,7 +70,7 @@ animations = [{
 "texture": ExtResource("8_2njh6")
 }],
 "loop": true,
-"name": &"drown",
+"name": &"drown_idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -123,7 +123,7 @@ shape = SubResource("CapsuleShape2D_qw5rk")
 texture_filter = 1
 scale = Vector2(2.97, 2.97)
 sprite_frames = SubResource("SpriteFrames_pesrj")
-animation = &"drown"
+animation = &"drown_idle"
 autoplay = "happy_idle"
 
 [node name="StepSounds" type="Node2D" parent="."]

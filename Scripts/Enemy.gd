@@ -30,6 +30,8 @@ var damage_flash_count : int = 8
 var flashes_left : int = 8
 var flashing : bool = false
 
+var last_player_state : int = 0
+
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
 	sprite = get_node("Sprite2D")
@@ -66,6 +68,9 @@ func _process(delta):
 	
 	if flashes_left == 0:
 		flashing = false
+		
+	if !wander and (last_player_state == Player.PlayerState.DEAD or last_player_state == Player.PlayerState.DROWN):
+		wander = true
 
 func init_death_timer():
 	death_timer = Timer.new()
@@ -134,5 +139,6 @@ func _on_sprite_2d_frame_changed():
 	play_random_step_sound()
 		
 func _on_player_dead(state):
-	if state == Player.PlayerState.DEAD:
+	last_player_state = state
+	if state == Player.PlayerState.DEAD or state == Player.PlayerState.DROWN:
 		wander = true

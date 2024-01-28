@@ -32,6 +32,8 @@ enum PlayerState {
 
 var player_state : PlayerState = PlayerState.HAPPY
 
+var drown_timer : Timer
+
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
 	sprite = get_node("Sprite2D")
@@ -51,9 +53,11 @@ func _ready():
 	randomize()
 
 func _physics_process(delta):
-	if player_state == PlayerState.DEAD:
-		return
+	var drowned = player_state == PlayerState.DROWN
 	
+	if player_state == PlayerState.DEAD or drowned:
+		return
+
 	if !isTickling:
 		get_input()
 		move_and_slide()
@@ -61,20 +65,19 @@ func _physics_process(delta):
 	if (jokeCooldown > 0):
 		jokeCooldown -= 1
 	
-	if health >= 75 && player_state != PlayerState.HAPPY:
+	if health >= 75 && player_state != PlayerState.HAPPY && !drowned:
 		player_state = PlayerState.HAPPY
 		state_changed.emit(player_state)
-	elif health < 75 && health >= 40 && player_state != PlayerState.NEUTRAL:
+	elif health < 75 && health >= 40 && player_state != PlayerState.NEUTRAL && !drowned:
 		player_state = PlayerState.NEUTRAL
 		state_changed.emit(player_state)
-	elif health < 40 && health > 0 && player_state != PlayerState.DREAD:
+	elif health < 40 && health > 0 && player_state != PlayerState.DREAD && !drowned:
 		player_state = PlayerState.DREAD
 		state_changed.emit(player_state)
-	elif health <= 0 && player_state != PlayerState.DEAD:
+	elif health <= 0 && player_state != PlayerState.DEAD && !drowned:
 		player_state = PlayerState.DEAD
-		sprite.play_animation(get_animation_name("idle"))
+		sprite.play(get_animation_name("idle"))
 		state_changed.emit(player_state)
-		
 
 func get_animation_name(animation_type : String) -> String:
 	var state = "neutral"
@@ -94,10 +97,10 @@ func get_animation_name(animation_type : String) -> String:
 	return state + "_" + animation_type
 
 func play_animation(input : Vector2):
-	if player_state == PlayerState.DEAD:
+	if player_state == PlayerState.DEAD or player_state == PlayerState.DROWN:
 		sprite.play(get_animation_name("idle"))
 		return
-		
+
 	if input.x == 0 and input.y == 0:
 		sprite.play(get_animation_name("idle"))
 		return
@@ -161,7 +164,7 @@ func play_random_step_sound():
 	step_sounds[index].play()
 
 func _input(event):
-	if player_state == PlayerState.DEAD:
+	if player_state == PlayerState.DEAD or player_state == PlayerState.DROWN:
 		return
 	
 	if event.is_action_pressed("tickle"):
@@ -178,3 +181,11 @@ func _input(event):
 
 func _on_sprite_2d_frame_changed():
 	play_random_step_sound()
+
+func _on_scene_parent_player_drown():
+	if player_state == PlayerState.DROWN:
+		return
+
+	state_changed.emit(PlayerState.DROWN)
+	player_state = PlayerState.DROWN
+	sprite.play(get_animation_name("idle"))

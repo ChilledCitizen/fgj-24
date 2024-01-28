@@ -20,6 +20,8 @@ enum PlayerState {
 
 @export var faces : Array[Texture2D]
 
+var game_over_delay : Timer
+
 func _ready():
 	gameOver.visible = false
 	for button in gameOver_buttons:
@@ -30,7 +32,11 @@ func _ready():
 				button.pressed.connect(_on_exit_pressed)
 		button.disabled = true
 	
+func show_game_over():
+	for button in gameOver_buttons:
+		button.disabled = false
 
+	gameOver.visible = true
 
 func UpdateState(state):
 	var face = faces[0]
@@ -44,11 +50,14 @@ func UpdateState(state):
 		PlayerState.DREAD:
 			face = faces[2]
 			pass
-		PlayerState.DEAD:
+		PlayerState.DEAD, PlayerState.DROWN:
 			face = faces[3]
-			for button in gameOver_buttons:
-				button.disabled = false
-			gameOver.visible = true
+			game_over_delay = Timer.new()
+			game_over_delay.one_shot = true
+			game_over_delay.wait_time = 3.5
+			add_child(game_over_delay)
+			game_over_delay.start()
+			game_over_delay.connect("timeout", show_game_over)
 			pass
 	
 	rect.texture = face
