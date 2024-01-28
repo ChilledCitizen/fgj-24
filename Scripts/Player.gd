@@ -194,4 +194,5 @@ func _on_scene_parent_player_drown():
 	sprite.play(get_animation_name("idle"))
 
 func _on_tickleInstance_destroyed():
+	tickle_sound.stop()
 	isTickling = false
