@@ -35,6 +35,10 @@ func _process(delta):
 	if Input.is_action_just_released("dialogue_next_line"):
 		current_line += 1
 		progress_scene()
+	
+	if Input.is_action_just_released("skip_dialogue"):
+		current_line = len(lines)
+		progress_scene()
 
 	if current_line >= 0 and current_line < len(lines) and minnie_text.visible_characters < len(lines[current_line]):
 		minnie_text.visible_characters += 1
