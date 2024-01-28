@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+signal state_changed(state)
+
 @export var speed : float = 400
 @export var tickleDist : float = 100
 @export var jokeProjectile : PackedScene
@@ -24,9 +26,11 @@ enum PlayerState {
 	HAPPY,
 	NEUTRAL,
 	DREAD,
+	DROWN,
+	DEAD
 }
 
-var player_state : PlayerState = PlayerState.DREAD
+var player_state : PlayerState = PlayerState.HAPPY
 
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
@@ -47,6 +51,8 @@ func _ready():
 	randomize()
 
 func _physics_process(delta):
+	if player_state == PlayerState.DEAD:
+		return
 	
 	if !isTickling:
 		get_input()
@@ -54,6 +60,21 @@ func _physics_process(delta):
 	
 	if (jokeCooldown > 0):
 		jokeCooldown -= 1
+	
+	if health >= 75 && player_state != PlayerState.HAPPY:
+		player_state = PlayerState.HAPPY
+		state_changed.emit(player_state)
+	elif health < 75 && health >= 40 && player_state != PlayerState.NEUTRAL:
+		player_state = PlayerState.NEUTRAL
+		state_changed.emit(player_state)
+	elif health < 40 && health > 0 && player_state != PlayerState.DREAD:
+		player_state = PlayerState.DREAD
+		state_changed.emit(player_state)
+	elif health <= 0 && player_state != PlayerState.DEAD:
+		player_state = PlayerState.DEAD
+		sprite.play_animation(get_animation_name("idle"))
+		state_changed.emit(player_state)
+		
 
 func get_animation_name(animation_type : String) -> String:
 	var state = "neutral"
@@ -65,10 +86,18 @@ func get_animation_name(animation_type : String) -> String:
 			state = "neutral"
 		PlayerState.DREAD:
 			state = "dread"
+		PlayerState.DROWN:
+			state = "drown"
+		PlayerState.DEAD:
+			state = "dead"
 
 	return state + "_" + animation_type
 
 func play_animation(input : Vector2):
+	if player_state == PlayerState.DEAD:
+		sprite.play(get_animation_name("idle"))
+		return
+		
 	if input.x == 0 and input.y == 0:
 		sprite.play(get_animation_name("idle"))
 		return
@@ -89,8 +118,11 @@ func get_input():
 func ApplyDamage(amount :int):
 	#print_debug("player damaged")
 	health -= amount
-	if health < 0 :
-		visible = false
+	if health <= 0:
+		player_state = PlayerState.DEAD
+		sprite.play(get_animation_name("idle"))
+		state_changed.emit(player_state)
+	
 
 func tickle():
 	isTickling = true

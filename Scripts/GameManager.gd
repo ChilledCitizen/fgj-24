@@ -23,6 +23,7 @@ func _ready():
 	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
 	Player.visibility_changed.connect(_on_player_killed)
 	laughteredNumber = UI.get_node("Laughtered/LaughteredNumber")
+	Player.state_changed.connect(_player_state_changed)
 	
 	for i in StartEnemyAmount:
 		spawnRandomEnemy()
@@ -71,3 +72,6 @@ func spawnRandomEnemy():
 		newEnemy.tree_exited.connect(_on_enemy_slain)
 		enemies.append(newEnemy)
 		
+func _player_state_changed(state):
+	UI.UpdateFace(state)
+	pass
