@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctb778c2bol40"]
+
+[ext_resource type="Script" path="res://Scenes/intro_cutscene.gd" id="1_ayc2e"]
+[ext_resource type="Texture2D" uid="uid://5bqbatjx681r" path="res://2d/minnie_idle_1.png" id="1_rk053"]
+[ext_resource type="Theme" uid="uid://3ye6hjd7as3t" path="res://new_theme.tres" id="2_3bwk2"]
+[ext_resource type="Texture2D" uid="uid://cgbcputj0ults" path="res://2d/UI_filter.png" id="2_4u0e6"]
+[ext_resource type="AudioStream" uid="uid://vyoqet5vpunv" path="res://Sound/minnie_speak_1.wav" id="5_0js8w"]
+[ext_resource type="AudioStream" uid="uid://bb2glmkqj07gb" path="res://Sound/drum_cymbal_loop.wav" id="6_tcn4k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kx8pk"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="IntroCutscene" type="Node2D"]
+script = ExtResource("1_ayc2e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(3, -139)
+scale = Vector2(10.7188, 10.7188)
+texture = ExtResource("1_rk053")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextBoxContainer" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextBox" type="Panel" parent="CanvasLayer/TextBoxContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -573.0
+offset_top = -409.0
+offset_right = 575.0
+offset_bottom = -67.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_3bwk2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kx8pk")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TextBoxContainer/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Dialogue" type="Label" parent="CanvasLayer/TextBoxContainer/TextBox/MarginContainer"]
+custom_minimum_size = Vector2(800, 200)
+layout_mode = 2
+size_flags_vertical = 1
+autowrap_mode = 3
+visible_characters = 0
+
+[node name="Nametag" type="Label" parent="CanvasLayer/TextBoxContainer/TextBox"]
+layout_mode = 0
+offset_top = -64.0
+offset_right = 197.0
+offset_bottom = 1.0
+text = "Minnie"
+
+[node name="Instructions" type="Label" parent="CanvasLayer/TextBoxContainer/TextBox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.76
+anchor_right = 1.0
+offset_left = 0.519958
+offset_top = -37.0
+offset_right = -11.0
+offset_bottom = -4.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Click for next line"
+
+[node name="BG" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_4u0e6")
+metadata/_edit_lock_ = true
+
+[node name="MinnieVoice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0js8w")
+bus = &"SFX"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tcn4k")
+volume_db = -9.204
+autoplay = true
+bus = &"Music"
