@@ -17,6 +17,7 @@ var spawnTimer : int = 0
 
 var music : AudioStreamPlayer
 var death_jingle : AudioStreamPlayer
+var pause_music : AudioStreamPlayer
 
 var should_spawn_enemy : bool = true
 
@@ -36,6 +37,7 @@ func _ready():
 	
 	music = get_node("MainMusic")
 	death_jingle = get_node("DeathJingle")
+	pause_music = get_node("PauseMusic")
 	
 	for i in StartEnemyAmount:
 		spawnRandomEnemy()
@@ -114,9 +116,11 @@ func _retry_pressed():
 func pauseGame():
 	get_tree().paused = true
 	UI.OpenPauseMenu()
+	pause_music.play()
 
 func continueGame():
 	get_tree().paused = false
+	pause_music.stop()
 
 func _input(event):
 	if event.is_action("pause"):

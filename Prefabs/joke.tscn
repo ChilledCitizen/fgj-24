@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dg2g350buqjvo"]
+[gd_scene load_steps=10 format=3 uid="uid://dg2g350buqjvo"]
 
 [ext_resource type="Texture2D" uid="uid://d5awifexxx57" path="res://2d/joke.png" id="1_0xp4r"]
 [ext_resource type="Script" path="res://Scripts/joke.gd" id="1_ent5b"]
@@ -12,6 +12,13 @@ particles_animation = true
 particles_anim_h_frames = 3
 particles_anim_v_frames = 1
 particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_xvifi"]
+_data = [Vector2(0, 0.909513), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uwi06"]
+curve = SubResource("Curve_xvifi")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h8342"]
 lifetime_randomness = 0.27
@@ -30,6 +37,7 @@ tangential_accel_min = -30.38
 tangential_accel_max = 30.39
 scale_min = 2.0
 scale_max = 3.0
+alpha_curve = SubResource("CurveTexture_uwi06")
 anim_offset_max = 1.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_l5slp"]
@@ -54,3 +62,4 @@ material = SubResource("CanvasItemMaterial_vihri")
 amount = 30
 process_material = SubResource("ParticleProcessMaterial_h8342")
 texture = SubResource("CanvasTexture_l5slp")
+lifetime = 0.4

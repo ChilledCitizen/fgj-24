@@ -116,7 +116,7 @@ func _physics_process(delta):
 		global_position += (global_position - player.global_position).normalized() * speed*2 * delta
 		
 func _process(delta):
-	if Engine.get_physics_frames() % 8 == 0 and flashing:
+	if Engine.get_physics_frames() % 10 == 0 and flashing:
 		sprite.visible = !sprite.visible
 		flashes_left -= 1
 	

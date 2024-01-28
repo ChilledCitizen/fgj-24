@@ -1,17 +1,30 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://c0i672wc1ied8"]
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://c0i672wc1ied8"]
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_7beqr"]
+resource_name = "Limiter"
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_t5n8s"]
+resource_name = "Limiter"
 
 [sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_0s82r"]
 resource_name = "HighPassFilter"
-cutoff_hz = 25.0
+cutoff_hz = 10.0
 resonance = 0.08
 
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_t6m2j"]
+resource_name = "Limiter"
+
 [resource]
+bus/0/effect/0/effect = SubResource("AudioEffectLimiter_7beqr")
+bus/0/effect/0/enabled = true
 bus/1/name = &"Music"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectLimiter_t5n8s")
+bus/1/effect/0/enabled = true
 bus/2/name = &"SFX"
 bus/2/solo = false
 bus/2/mute = false
@@ -20,3 +33,5 @@ bus/2/volume_db = 0.0
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectHighPassFilter_0s82r")
 bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectLimiter_t6m2j")
+bus/2/effect/1/enabled = true
