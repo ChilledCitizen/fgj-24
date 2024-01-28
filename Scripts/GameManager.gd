@@ -6,6 +6,8 @@ class_name GameManager
 @export var EnemyTypes : Array[PackedScene]
 @export var StartEnemyAmount : int = 5
 @export var EnemySpwanRate : float = 0.5
+@export var DifficultyRampRate : float = 1.5
+@export var DifficultyRampTime : float = 10
 @export var MaxEnemies : int = 15
 @export var Deck : Deck
 var MainMenu : PackedScene
@@ -14,18 +16,20 @@ var laughtered : int = 0
 var laughteredNumber 
 var spawnTimer : int = 0
 @onready var rand : RandomNumberGenerator = RandomNumberGenerator.new()
+var _enemySpawnRate
 
 var music : AudioStreamPlayer
 var death_jingle : AudioStreamPlayer
 var pause_music : AudioStreamPlayer
 
 var should_spawn_enemy : bool = true
+var difficultyRampTimer : Timer
 
 signal player_drown
 
 func _ready():
 	randomize()
-	EnemySpwanRate = EnemySpwanRate*60
+	_enemySpawnRate = EnemySpwanRate*60
 	#Player.tree_exited.connect(_on_player_killed)
 	#EnemyTypes[0].tree_exited.connect(_on_enemy_slain)
 	MainMenu = ResourceLoader.load("res://Scenes/menu.tscn")
@@ -34,6 +38,13 @@ func _ready():
 	UI.retry_pressed.connect(_retry_pressed)
 	UI.exit_pressed.connect(_exit_pressed)
 	UI.continue_pressed.connect(continueGame)
+	
+	difficultyRampTimer = Timer.new()
+	difficultyRampTimer.wait_time = DifficultyRampTime
+	difficultyRampTimer.timeout.connect(rampUpDifficulty)
+	difficultyRampTimer.one_shot = false
+	add_child(difficultyRampTimer)
+	difficultyRampTimer.start()
 	
 	music = get_node("MainMusic")
 	death_jingle = get_node("DeathJingle")
@@ -48,11 +59,13 @@ func _ready():
 			enemies.append(child)
 			child.tree_exited.connect(_on_enemy_slain)
 			print_debug("added enemy")
-			
+	
+	if DifficultyRampRate <= 0:
+		DifficultyRampRate = 1
 	
 	
 func _physics_process(delta):
-	if spawnTimer >= EnemySpwanRate && len(enemies) < MaxEnemies:
+	if spawnTimer >= _enemySpawnRate && len(enemies) < MaxEnemies:
 		spawnRandomEnemy()
 		print_debug("added enemy in update")
 		spawnTimer = 0
@@ -125,3 +138,10 @@ func continueGame():
 func _input(event):
 	if event.is_action("pause"):
 		pauseGame()
+
+func rampUpDifficulty():
+	MaxEnemies = MaxEnemies*DifficultyRampRate
+	_enemySpawnRate = clamp(_enemySpawnRate/DifficultyRampRate, 1, INF)
+	print_debug("ramp difficulty, max enemies: " + str(MaxEnemies) +", rate: " + str(_enemySpawnRate))
+	
+	
