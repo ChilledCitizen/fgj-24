@@ -94,7 +94,11 @@ func _player_state_changed(state):
 		should_spawn_enemy = false
 		music.stop()
 		death_jingle.play()
-		
+		HighscoreManager.SetHighscore(laughtered)
+		UI.SetEndScores(laughtered)
+	
+	UI.UpdateState(state)
+
 func _exit_pressed():
 	if get_tree().paused:
 		get_tree().paused = false
