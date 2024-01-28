@@ -23,6 +23,13 @@ var tickle_sound : AudioStreamPlayer2D
 var joke_sound : AudioStreamPlayer2D
 var spriteSize : Vector2
 
+var flash_timer : Timer
+var flash_max_duration : float = 1.0
+
+var damage_flash_count : int = 8
+var flashes_left : int = 8
+var flashing : bool = false
+
 enum PlayerState {
 	HAPPY,
 	NEUTRAL,
@@ -34,6 +41,21 @@ enum PlayerState {
 var player_state : PlayerState = PlayerState.HAPPY
 
 var drown_timer : Timer
+
+func init_flash_timer():
+	flash_timer = Timer.new()
+	flash_timer.one_shot = true
+	add_child(flash_timer)
+	flash_timer.connect("timeout", self.on_flash_end)
+
+func on_flash_end():
+	if !sprite:
+		return
+		
+	if sprite.visible:
+		return
+		
+	sprite.visible = true
 
 func init_step_sounds():
 	step_sound_parent = get_node("StepSounds")
@@ -51,7 +73,13 @@ func _ready():
 	joke_sound = get_node("Joke")
 
 	init_step_sounds()
+	init_flash_timer()
 	randomize()
+
+func start_flashing():
+	flashes_left = damage_flash_count
+	flashing = true
+	flash_timer.start(flash_max_duration)
 
 func _physics_process(delta):
 	var drowned = player_state == PlayerState.DROWN
@@ -79,6 +107,18 @@ func _physics_process(delta):
 		player_state = PlayerState.DEAD
 		sprite.play(get_animation_name("idle"))
 		state_changed.emit(player_state)
+
+
+func _process(delta):
+	if Engine.get_physics_frames() % 10 == 0 and flashing:
+		sprite.visible = !sprite.visible
+		flashes_left -= 1
+
+	if flashes_left == 0:
+		flashing = false
+
+	if !flashing and !sprite.visible:
+		sprite.visible = true
 
 func get_animation_name(animation_type : String) -> String:
 	var state = "neutral"
@@ -122,6 +162,9 @@ func get_input():
 func ApplyDamage(amount :int):
 	#print_debug("player damaged")
 	health -= amount
+	if !flashing:
+		start_flashing()
+
 	if health <= 0:
 		player_state = PlayerState.DEAD
 		sprite.play(get_animation_name("idle"))
