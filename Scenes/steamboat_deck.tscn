@@ -49,3 +49,5 @@ bus = &"Music"
 stream = ExtResource("10_637qn")
 volume_db = -4.239
 bus = &"Music"
+
+[connection signal="player_drown" from="." to="Player" method="_on_scene_parent_player_drown"]

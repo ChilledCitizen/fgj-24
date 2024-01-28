@@ -52,7 +52,7 @@ particles_anim_loop = false
 _data = [Vector2(0, 0.845418), 0.0, 0.0, 0, 0, Vector2(1, 0.212007), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_iics3"]
+[sub_resource type="CurveTexture" id="CurveTexture_hrup5"]
 curve = SubResource("Curve_x40bm")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kvd1a"]
@@ -72,14 +72,14 @@ tangential_accel_min = -59.74
 tangential_accel_max = 67.7
 scale_max = 2.0
 scale_over_velocity_max = 1.0
-alpha_curve = SubResource("CurveTexture_iics3")
+alpha_curve = SubResource("CurveTexture_hrup5")
 anim_offset_max = 1.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_2vgmt"]
 diffuse_texture = ExtResource("12_dphpk")
 texture_filter = 1
 
-[node name="Enemy_Pete" type="Area2D" groups=["enemy"]]
+[node name="Enemy_Pete2" type="Area2D" groups=["enemy"]]
 script = ExtResource("1_fy07b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
