@@ -103,10 +103,23 @@ func spawnRandomEnemy():
 		var r = rand.randi_range(0, EnemyTypes.size()-1)
 		var newEnemy : Enemy = EnemyTypes[r].instantiate()
 		add_child(newEnemy)
-		newEnemy.global_position = Vector2(rand.randi_range(Player.global_position.x+200, Player.global_position.x+800), rand.randi_range(Player.global_position.y+200,Player.global_position.y+800))
+		newEnemy.global_position = enemySpawnLocation()
 		newEnemy.tree_exited.connect(_on_enemy_slain)
 		enemies.append(newEnemy)
-		
+
+func enemySpawnLocation():
+	var location  = Vector2(0,0)
+	var validArea = Vector2(Deck.floorArea.x/2, Deck.floorArea.y/2)
+	var playerPosition = Player.global_position
+	#Spawn outside of screen
+	var randomAngle = rand.randi()*PI*2
+	var randomPoint = Vector2(cos(randomAngle)*100, sin(randomAngle)*100)
+	var screenArea = Vector2(Deck.width, Deck.height)
+	var rawLocation = Player.global_position+screenArea*(randomPoint-Player.global_position).normalized()
+	location = clamp(rawLocation,-validArea, validArea)
+	
+	return location
+	
 func _player_state_changed(state):
 	UI.UpdateState(state)
 	if state == Player.PlayerState.DEAD or state == Player.PlayerState.DROWN:
