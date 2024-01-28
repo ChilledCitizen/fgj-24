@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctyrodpltwa3q"]
+[gd_scene load_steps=11 format=3 uid="uid://ctyrodpltwa3q"]
 
 [ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="1_dqxwu"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ejwid"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b6wk3ybfjyc0a" path="res://Prefabs/deck.tscn" id="8_ogywo"]
 [ext_resource type="PackedScene" uid="uid://4kjd68liof5x" path="res://UI.tscn" id="9_3evd6"]
 [ext_resource type="AudioStream" uid="uid://b4h355elm6kof" path="res://Sound/big_band_big_trouble.wav" id="9_epq8s"]
+[ext_resource type="AudioStream" uid="uid://c4cgncdosqwfi" path="res://Sound/game_over.wav" id="10_637qn"]
 
 [node name="SceneParent" type="Node2D" node_paths=PackedStringArray("UI", "Player", "Deck")]
 script = ExtResource("1_ejwid")
@@ -38,8 +39,13 @@ tickleArea = ExtResource("6_uepah")
 Size = 1.0
 metadata/_edit_lock_ = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_epq8s")
 volume_db = -7.0
 autoplay = true
+bus = &"Music"
+
+[node name="DeathJingle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_637qn")
+volume_db = -4.239
 bus = &"Music"
