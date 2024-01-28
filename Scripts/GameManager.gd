@@ -33,6 +33,7 @@ func _ready():
 	Player.state_changed.connect(_player_state_changed)
 	UI.retry_pressed.connect(_retry_pressed)
 	UI.exit_pressed.connect(_exit_pressed)
+	UI.continue_pressed.connect(continueGame)
 	
 	music = get_node("MainMusic")
 	death_jingle = get_node("DeathJingle")
@@ -95,7 +96,20 @@ func _player_state_changed(state):
 		death_jingle.play()
 		
 func _exit_pressed():
+	if get_tree().paused:
+		get_tree().paused = false
 	_on_player_killed()
 	
 func _retry_pressed():
 	get_tree().reload_current_scene()
+
+func pauseGame():
+	get_tree().paused = true
+	UI.OpenPauseMenu()
+
+func continueGame():
+	get_tree().paused = false
+
+func _input(event):
+	if event.is_action("pause"):
+		pauseGame()

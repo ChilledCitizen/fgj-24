@@ -4,11 +4,15 @@ class_name UI
 
 signal exit_pressed
 signal retry_pressed
+signal continue_pressed
+
 
 
 @export var rect : TextureRect
 @export var gameOver : Control
 @export var gameOver_buttons : Array[Button]
+@export var pause : Control
+@export var pause_buttons : Array[Button]
 
 enum PlayerState {
 	HAPPY,
@@ -24,6 +28,8 @@ var game_over_delay : Timer
 
 func _ready():
 	gameOver.visible = false
+	pause.visible = false
+	
 	for button in gameOver_buttons:
 		match button.name:
 			"Retry":
@@ -31,12 +37,23 @@ func _ready():
 			"Exit":
 				button.pressed.connect(_on_exit_pressed)
 		button.disabled = true
+		
+	for button in pause_buttons:
+		match button.name:
+			"Continue":
+				button.pressed.connect(_on_continue_pressed)
+			"Exit":
+				button.pressed.connect(_on_exit_pressed)
 	
 func show_game_over():
 	for button in gameOver_buttons:
 		button.disabled = false
-
 	gameOver.visible = true
+
+
+func OpenPauseMenu():
+	pause.visible = true
+	
 
 func UpdateState(state):
 	var face = faces[0]
@@ -67,3 +84,7 @@ func _on_retry_pressed():
 
 func _on_exit_pressed():
 	exit_pressed.emit()
+
+func _on_continue_pressed():
+	pause.visible = false
+	continue_pressed.emit()
